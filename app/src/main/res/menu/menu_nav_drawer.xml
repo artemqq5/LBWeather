@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/displayWeather"
+        android:title="@string/fragment_display"
+        />
+
+    <item
+        android:id="@+id/settings_nav"
+        android:title="@string/fragment_settings"
+        />
+
+    <item
+        android:id="@+id/tomorrow"
+        android:title="@string/tomorrow"
+        />
+
+    <item
+        android:id="@+id/day_after_tomorrow"
+        android:title="@string/day_after_tomorrow"
+        />
+
+</menu>
