@@ -21,6 +21,7 @@ import com.example.myapplication.helper.TimeFormat.HOUR_MINUTE
 import com.example.myapplication.helper.TimeFormat.YEAR_MONTH_DAY
 import com.example.myapplication.helper.TimeFormat.YEAR_MONTH_DAY_HOUR_MINUTE
 import com.example.myapplication.helper.TimeFormat.getParsingTime
+import com.example.myapplication.sharedPreferences.WeatherPref
 import com.example.myapplication.viewmodel.ViewModelLocation
 import com.example.myapplication.viewmodel.ViewModelWeather
 import com.example.myapplication.weatherModelData.ConditionXX
@@ -90,7 +91,10 @@ class DisplayWeather : Fragment() {
             })
 
         binding.swipeLayout.setOnRefreshListener {
-            updateData("Полтава")
+            val locationCoordinate = WeatherPref.getShPrefLocation()?.let {
+                "${it.lat},${it.lon}"
+            } ?: "Kiev"
+            updateData(locationCoordinate)
             Log.i("tytgyhu3j2", "request API from SwipeLayout")
         }
 
@@ -201,6 +205,9 @@ class DisplayWeather : Fragment() {
         } else {
             try {
                 viewModel.gg(city, "uk") {
+                    if(it == -1) {
+                        Toast.makeText(main_context, "Помилка з'єднання", Toast.LENGTH_SHORT).show()
+                    }
                     binding.swipeLayout.isRefreshing = false
                 }
             } catch (e: Exception) {

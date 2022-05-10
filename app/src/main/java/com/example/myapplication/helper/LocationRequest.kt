@@ -13,6 +13,7 @@ import androidx.core.content.ContextCompat.checkSelfPermission
 import com.example.myapplication.MainActivity.Companion.main_context
 import com.example.myapplication.dialogs.DialogLocationPermission.dialogGPS
 import com.example.myapplication.dialogs.DialogLocationPermission.dialogPermission
+import com.example.myapplication.helper.locationModel.LocationModel
 import com.google.android.gms.location.LocationServices
 import java.util.*
 
@@ -47,7 +48,7 @@ object LocationRequest {
         }
     }
 
-    fun checkPermissionLocation(func: (String) -> Unit) {
+    fun checkPermissionLocation(func: (LocationModel) -> Unit) {
         if (checkSelfPermission(
                 main_context,
                 Manifest.permission.ACCESS_COARSE_LOCATION
@@ -71,7 +72,7 @@ object LocationRequest {
     }
 
     @SuppressLint("MissingPermission")
-    fun getLastLocation(func: (String) -> Unit) {
+    fun getLastLocation(func: (LocationModel) -> Unit) {
         fusedLocationClient.lastLocation.addOnSuccessListener { location ->
             if (location != null) {
 
@@ -82,9 +83,15 @@ object LocationRequest {
                     1
                 )
 
-                Log.i("tytgyhu3j2", "fusedLocationClient ${finalLocale[0].locality}")
-
-                func(finalLocale[0].locality)
+                Log.i("tytgyhu3j2", "fusedLocationClient ${finalLocale[0]}")
+                val locationObj = finalLocale[0]
+                func(
+                    LocationModel(
+                        locationObj.latitude.toString(),
+                        locationObj.longitude.toString(),
+                        locationObj.locality.toString()
+                    )
+                )
             } else {
                 Log.i("tytgyhu3j2", "fusedLocationClient is null")
             }

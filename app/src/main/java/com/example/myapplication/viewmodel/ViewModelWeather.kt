@@ -8,6 +8,7 @@ import com.example.myapplication.network.WeatherRepository
 import com.example.myapplication.sharedPreferences.WeatherPref
 import com.example.myapplication.weatherModelData.WeatherModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -24,7 +25,7 @@ class ViewModelWeather : ViewModel() {
     fun gg(
         location: String,
         language: String,
-        func: () -> Unit
+        func: (Int) -> Unit
     ) {
         viewModelScope.launch(Dispatchers.IO) {
             getDataFromServer(location, language, func)
@@ -36,8 +37,10 @@ class ViewModelWeather : ViewModel() {
     private suspend fun getDataFromServer(
         location: String,
         language: String,
-        func: () -> Unit
+        func: (Int) -> Unit
     ) {
+        var result = 1
+
         Log.i("tytgyhu3j2", "request to API Weather")
         val job = viewModelScope.launch(Dispatchers.IO) {
             try {
@@ -48,6 +51,7 @@ class ViewModelWeather : ViewModel() {
 
             } catch (e: Exception) {
                 Log.i("tytgyhu3j2", " отримання інфо ${e.message}")
+                result = -1
             }
 
         }
@@ -55,7 +59,7 @@ class ViewModelWeather : ViewModel() {
         job.join()
         withContext(Dispatchers.Main) {
             try {
-                func()
+                func(result)
             } catch (e: Exception) {
                 Log.i("tytgyhu3j2", " перехід  ${e.message}")
             }

@@ -16,8 +16,10 @@ import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
+import com.example.myapplication.dialogs.DialogLocation
 import com.example.myapplication.helper.InternetConnection
 import com.example.myapplication.helper.LocationRequest
+import com.example.myapplication.helper.locationModel.LocationModel
 import com.example.myapplication.sharedPreferences.WeatherPref
 import com.example.myapplication.viewmodel.ViewModelLocation
 import com.example.myapplication.viewmodel.ViewModelWeather
@@ -131,8 +133,10 @@ class MainActivity : AppCompatActivity(),
 
         findViewById<Button>(R.id.getLocationAuto).setOnClickListener {
 
-            LocationRequest.checkPermissionLocation {
-                viewModelLocation.currentLocation.value = it
+            LocationRequest.checkPermissionLocation { local->
+                DialogLocation.dialogLocation(local) { locationFromFunction ->
+                    viewModelLocation.updateCurrentLocation(locationFromFunction)
+                }.show()
             }
 
         }
@@ -183,12 +187,18 @@ class MainActivity : AppCompatActivity(),
 
     }
 
-    private fun updateDataLocation(city: String) {
+    private fun updateDataLocation(modelLoc: LocationModel) {
         if (!InternetConnection.checkForInternet(main_context)) {
             Toast.makeText(main_context, "Інтернет не працює", Toast.LENGTH_SHORT).show()
         } else {
             try {
-                viewModelWeather.gg(city, "uk") {}
+                val coordinate = "${modelLoc.lat},${modelLoc.lon}"
+                viewModelWeather.gg(coordinate, "uk") {
+                    if(it == 1) {
+                        WeatherPref.setShPrefLocation(modelLoc)
+                    } else Toast.makeText(this, "Помилка з'єднання", Toast.LENGTH_SHORT).show()
+
+                }
             } catch (e: Exception) {
                 Toast.makeText(main_context, e.message, Toast.LENGTH_SHORT).show()
             }
