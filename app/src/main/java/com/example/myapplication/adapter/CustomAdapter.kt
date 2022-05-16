@@ -43,7 +43,7 @@ class CustomAdapter(
             if (dataModel.chance_of_snow == null || dataModel.chance_of_rain == null) {
                 binding.time.text = fromStr(R.string.timeNow)
             } else {
-                binding.time.text = if(isTime24()) {
+                binding.time.text = if (isTime24()) {
                     dataModel.time.getParsingTime(YEAR_MONTH_DAY_HOUR_MINUTE, HOUR_MINUTE)
                 } else dataModel.time.getParsingTimeHour(YEAR_MONTH_DAY_HOUR_MINUTE, HOUR_MINUTE_AA)
             }

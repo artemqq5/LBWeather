@@ -6,7 +6,7 @@ import com.bumptech.glide.Glide
 import com.example.myapplication.MainActivity.Companion.main_context
 import com.example.myapplication.R
 
-object GlideLoader  {
+object GlideLoader {
 
     // load image from url with Glide
     fun ImageView.loadImg(url: String) {
@@ -17,7 +17,7 @@ object GlideLoader  {
                 .placeholder(R.drawable.ic_image)
                 .centerCrop()
                 .into(this)
-        }catch (e: Exception) {
+        } catch (e: Exception) {
             Toast.makeText(main_context, e.message, Toast.LENGTH_SHORT).show()
         }
 

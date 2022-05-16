@@ -8,6 +8,7 @@
 
     <TextView
         android:id="@+id/dataText"
+        android:textColor="@color/gray"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
@@ -54,51 +55,51 @@
 
         <TextView
             android:id="@+id/temperatureText"
+            style="@style/moreWeatherText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/moreWeatherText"
             tools:text="Темпепетура: 14 °С" />
 
         <TextView
             android:id="@+id/feelTempText"
+            style="@style/moreWeatherText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/moreWeatherText"
             tools:text="По відчуттям: 12 °С" />
 
         <TextView
             android:id="@+id/humidityText"
+            style="@style/moreWeatherText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/moreWeatherText"
             tools:text="Вологість: 45 %" />
 
         <TextView
             android:id="@+id/chanceRainText"
+            style="@style/moreWeatherText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/moreWeatherText"
             tools:text="Ймовірність дощу: 22 %" />
 
         <TextView
             android:id="@+id/chanceSnowText"
+            style="@style/moreWeatherText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/moreWeatherText"
             tools:text="Ймовірність снігу: 3 %" />
 
         <TextView
             android:id="@+id/windSpeedText"
+            style="@style/moreWeatherText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/moreWeatherText"
             tools:text="Швидкість вітру: 5 км/год" />
 
         <TextView
             android:id="@+id/uvIndexText"
+            style="@style/moreWeatherText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/moreWeatherText"
             tools:text="Ультрафіолет (0-8): 3" />
     </LinearLayout>
 
@@ -108,6 +109,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:fontFamily="@font/raleway_5"
+        android:textColor="@color/gray"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@+id/infoWeatherIcon"
         app:layout_constraintEnd_toEndOf="@+id/linearLayout4"

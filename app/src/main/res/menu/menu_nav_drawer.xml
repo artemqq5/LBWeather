@@ -3,22 +3,18 @@
 
     <item
         android:id="@+id/displayWeather"
-        android:title="@string/fragment_display"
-        />
+        android:title="@string/fragment_display" />
 
     <item
         android:id="@+id/settings_nav"
-        android:title="@string/fragment_settings"
-        />
+        android:title="@string/fragment_settings" />
 
     <item
         android:id="@+id/tomorrow"
-        android:title="@string/tomorrow"
-        />
+        android:title="@string/tomorrow" />
 
     <item
         android:id="@+id/day_after_tomorrow"
-        android:title="@string/day_after_tomorrow"
-        />
+        android:title="@string/day_after_tomorrow" />
 
 </menu>

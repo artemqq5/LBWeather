@@ -2,7 +2,6 @@ package com.example.myapplication.dialogs
 
 import com.example.myapplication.MainActivity.Companion.main_context
 import com.example.myapplication.R
-import com.example.myapplication.helper.FromStr
 import com.example.myapplication.helper.FromStr.fromStr
 import com.example.myapplication.location.LocationModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder

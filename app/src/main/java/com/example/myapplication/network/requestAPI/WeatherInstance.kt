@@ -29,7 +29,6 @@ object WeatherInstance {
     }
 
 
-
     // lazy create model request with interface
     val getAPI: WeatherGetAPI by lazy {
         retrofit.create(WeatherGetAPI::class.java)

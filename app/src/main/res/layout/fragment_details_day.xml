@@ -8,6 +8,7 @@
 
     <TextView
         android:id="@+id/dataText"
+        android:textColor="@color/gray"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
@@ -45,58 +46,58 @@
 
         <TextView
             android:id="@+id/temperatureText"
+            style="@style/moreWeatherText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/moreWeatherText"
             tools:text="Темпепетура: 11/16 °С" />
 
         <TextView
             android:id="@+id/humidityText"
+            style="@style/moreWeatherText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/moreWeatherText"
             tools:text="Вологість: 45 %" />
 
         <TextView
             android:id="@+id/chanceRainText"
+            style="@style/moreWeatherText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/moreWeatherText"
             tools:text="Ймовірність дощу: 22 %" />
 
         <TextView
             android:id="@+id/chanceSnowText"
+            style="@style/moreWeatherText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/moreWeatherText"
             tools:text="Ймовірність снігу: 3 %" />
 
         <TextView
             android:id="@+id/windSpeedText"
+            style="@style/moreWeatherText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/moreWeatherText"
             tools:text="Швидкість вітру: 5 км/год" />
 
         <TextView
             android:id="@+id/uvIndexText"
+            style="@style/moreWeatherText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/moreWeatherText"
             tools:text="Ультрафіолет (0-8): 3" />
 
         <TextView
             android:id="@+id/sunriseText"
+            style="@style/moreWeatherText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/moreWeatherText"
             tools:text="Схід сонця: 04:12" />
 
         <TextView
             android:id="@+id/sunset"
+            style="@style/moreWeatherText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/moreWeatherText"
             tools:text="Захід сонця: 21:09" />
     </LinearLayout>
 
@@ -105,6 +106,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
+        android:textColor="@color/gray"
         android:fontFamily="@font/raleway_5"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@+id/infoAboutImage"

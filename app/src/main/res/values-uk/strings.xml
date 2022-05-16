@@ -46,7 +46,7 @@
     <string name="kph">км</string>
     <string name="mph">миль</string>
 
-<!--    Preferences Main -->
+    <!--    Preferences Main -->
     <string name="displayDataWeather">Відображення даних про погоду</string>
     <string name="PressToSetting">Нажміть для налаштування</string>
     <string name="unitOfTemperature">Одиниця вимірювання температури</string>
@@ -55,7 +55,7 @@
     <string name="timeFormat">Формат часу</string>
 
 
-<!--    Preferences Display Data-->
+    <!--    Preferences Display Data-->
     <string name="displayDataDay">Відображення інформації про день</string>
     <string name="displayDataHour">Відображення інформації погодинно</string>
     <string name="rainChance">Ймовірність дощу</string>

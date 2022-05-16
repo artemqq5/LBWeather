@@ -70,6 +70,5 @@ object WeatherPref {
     }
 
 
-
 }
 

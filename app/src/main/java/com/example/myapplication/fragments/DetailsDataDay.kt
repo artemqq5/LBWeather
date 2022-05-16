@@ -13,10 +13,8 @@ import com.example.myapplication.fragments.settings_fragments.PreferencesObject.
 import com.example.myapplication.fragments.settings_fragments.PreferencesObject.CHANCE_SNOW_DAY
 import com.example.myapplication.fragments.settings_fragments.PreferencesObject.ULTRAVIOLET_DAY
 import com.example.myapplication.fragments.settings_fragments.PreferencesObject.getValuePreference
-import com.example.myapplication.helper.FromStr
 import com.example.myapplication.helper.FromStr.fromStr
 import com.example.myapplication.helper.GlideLoader.loadImg
-import com.example.myapplication.helper.StateUnit
 import com.example.myapplication.helper.StateUnit.isCelsius
 import com.example.myapplication.helper.StateUnit.isKilometer
 import com.example.myapplication.helper.StateUnit.isTime24

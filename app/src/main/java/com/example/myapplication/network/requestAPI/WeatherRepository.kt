@@ -8,7 +8,7 @@ class WeatherRepository {
     suspend fun getWeatherData(
         location: String,
         language: String
-    ) : Response<WeatherModel> {
+    ): Response<WeatherModel> {
         return WeatherInstance.getAPI.getWeatherData(location, language)
     }
 

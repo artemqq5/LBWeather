@@ -3,36 +3,36 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <Preference
         app:fragment="com.example.myapplication.fragments.settings_fragments"
+        app:iconSpaceReserved="false"
         app:key="@string/dataToDisplayPreference"
-        app:title="@string/displayDataWeather"
         app:summary="@string/PressToSetting"
-        app:iconSpaceReserved="false"/>
+        app:title="@string/displayDataWeather" />
 
     <ListPreference
+        android:defaultValue="celsius"
+        android:entryValues="@array/list_temperature_value"
+        app:entries="@array/list_temperature"
+        app:iconSpaceReserved="false"
         app:key="unit_temperature"
         app:title="@string/unitOfTemperature"
-        app:entries="@array/list_temperature"
-        android:entryValues="@array/list_temperature_value"
-        android:defaultValue="celsius"
-        app:useSimpleSummaryProvider="true"
-        app:iconSpaceReserved="false"/>
+        app:useSimpleSummaryProvider="true" />
 
     <ListPreference
+        android:defaultValue="kph"
+        android:entryValues="@array/list_speed_value"
+        app:entries="@array/list_speed"
+        app:iconSpaceReserved="false"
         app:key="unit_speed"
         app:title="@string/unitOfSpeed"
-        app:entries="@array/list_speed"
-        android:entryValues="@array/list_speed_value"
-        android:defaultValue="kph"
-        app:useSimpleSummaryProvider="true"
-        app:iconSpaceReserved="false"/>
+        app:useSimpleSummaryProvider="true" />
 
     <ListPreference
+        android:defaultValue="europe"
+        android:entryValues="@array/list_times_value"
+        app:entries="@array/list_times"
+        app:iconSpaceReserved="false"
         app:key="time_format"
         app:title="@string/timeFormat"
-        app:entries="@array/list_times"
-        android:entryValues="@array/list_times_value"
-        android:defaultValue="europe"
-        app:useSimpleSummaryProvider="true"
-        app:iconSpaceReserved="false"/>
+        app:useSimpleSummaryProvider="true" />
 
 </PreferenceScreen>

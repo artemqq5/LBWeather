@@ -3,11 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.myapplication">
 
-<!--    change network connection-->
+    <!--    change network connection-->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-<!--    to use the internet-->
-    <uses-permission android:name="android.permission.INTERNET"/>
-<!--    to use approximately location-->
+    <!--    to use the internet-->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!--    to use approximately location-->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
@@ -29,7 +29,6 @@
         </activity>
 
     </application>
-
 
 
 </manifest>
