@@ -1,7 +1,6 @@
 package com.example.myapplication
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.Toast
@@ -16,28 +15,32 @@ import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
-import com.example.myapplication.dialogs.DialogLocation
-import com.example.myapplication.helper.InternetConnection
-import com.example.myapplication.helper.LocationRequest
-import com.example.myapplication.helper.locationModel.LocationModel
+import com.example.myapplication.databinding.ActivityMainBinding
+import com.example.myapplication.dialogs.DialogLocation.dialogLocation
+import com.example.myapplication.helper.FromStr.fromStr
+import com.example.myapplication.location.LocationModel
+import com.example.myapplication.location.LocationRequest
+import com.example.myapplication.location.LocationRequest.checkPermissionLocation
+import com.example.myapplication.network.internetConnection.InternetConnection.checkForInternet
 import com.example.myapplication.sharedPreferences.WeatherPref
+import com.example.myapplication.sharedPreferences.WeatherPref.getShPrefLocation
+import com.example.myapplication.sharedPreferences.WeatherPref.getShPrefWeather
 import com.example.myapplication.viewmodel.ViewModelLocation
 import com.example.myapplication.viewmodel.ViewModelWeather
-import com.google.android.material.appbar.AppBarLayout
-import com.google.android.material.appbar.MaterialToolbar
-import com.google.android.material.navigation.NavigationView
 
-class MainActivity : AppCompatActivity(),
+class MainActivity : AppCompatActivity(), View.OnClickListener,
     PreferenceFragmentCompat.OnPreferenceStartFragmentCallback {
 
+    private lateinit var binding: ActivityMainBinding
+
     private lateinit var navigationController: NavController
-    private lateinit var navigationHost: NavHostFragment
     private val viewModelWeather: ViewModelWeather by viewModels()
     private val viewModelLocation: ViewModelLocation by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         // assign a context
         main_context = this
@@ -47,12 +50,9 @@ class MainActivity : AppCompatActivity(),
             .findFragmentById(R.id.nav_fragment_controller) as NavHostFragment)
             .navController
 
-        navigationHost = (supportFragmentManager
-            .findFragmentById(R.id.nav_fragment_controller) as NavHostFragment)
-
-        val navigation = findViewById<NavigationView>(R.id.navView)
-        val toolBar = findViewById<MaterialToolbar>(R.id.toolBar)
-        val drawerLayout = findViewById<DrawerLayout>(R.id.drawer_layout)
+        val navigation = binding.navView
+        val toolBar = binding.toolBar
+        val drawerLayout = binding.drawerLayout
 
         // create configuration TollBar with navGraph, drawerLayout
         val appBarConfiguration = AppBarConfiguration(setOf(R.id.displayWeather), drawerLayout)
@@ -64,30 +64,17 @@ class MainActivity : AppCompatActivity(),
 
         // create listener on change layouts in nav fragmentContainer
         navigationController.addOnDestinationChangedListener { _, destination, _ ->
-            val display = resources.getString(R.string.fragment_display)
-            val settings = resources.getString(R.string.fragment_settings)
-            val splashScreen = resources.getString(R.string.fragment_splash_screen)
+            val display = fromStr(R.string.fragment_display)
 
             when (destination.label) {
                 display -> {
                     findViewById<Button>(R.id.getLocationAuto).visibility = View.VISIBLE
-
                     drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
-                    findViewById<AppBarLayout>(R.id.appBarLayout).visibility = View.VISIBLE
-                }
-
-                splashScreen -> {
-                    findViewById<Button>(R.id.getLocationAuto).visibility = View.GONE
-
-                    drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
-                    findViewById<AppBarLayout>(R.id.appBarLayout).visibility = View.GONE
                 }
 
                 else -> {
                     findViewById<Button>(R.id.getLocationAuto).visibility = View.GONE
-
                     drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
-                    findViewById<AppBarLayout>(R.id.appBarLayout).visibility = View.VISIBLE
                 }
             }
         }
@@ -95,11 +82,8 @@ class MainActivity : AppCompatActivity(),
         // create listener on click on items in navDrawer
         navigation.setNavigationItemSelectedListener { menuItem ->
 
-            val fragmentDisplayWeather = resources.getString(R.string.fragment_display)
-            val fragmentSettings = resources.getString(R.string.fragment_settings)
-            val fragmentDetailsData = resources.getString(R.string.fragment_details_day)
-            val fragmentTomorrow = resources.getString(R.string.tomorrow)
-            val fragmentDayAfterTomorrow = resources.getString(R.string.day_after_tomorrow)
+            val fragmentTomorrow = fromStr(R.string.tomorrow)
+            val fragmentDayAfterTomorrow = fromStr(R.string.day_after_tomorrow)
 
 
             when (menuItem.title) {
@@ -130,26 +114,18 @@ class MainActivity : AppCompatActivity(),
         // initialisation request for get permission location
         LocationRequest.locationRequestInit()
 
+        binding.getLocationAuto.setOnClickListener(this)
+        binding.buttonUpdateConnect.setOnClickListener(this)
 
-        findViewById<Button>(R.id.getLocationAuto).setOnClickListener {
-
-            LocationRequest.checkPermissionLocation { local->
-                DialogLocation.dialogLocation(local) { locationFromFunction ->
-                    viewModelLocation.updateCurrentLocation(locationFromFunction)
-                }.show()
-            }
-
-        }
-
+        // do request Weather API when Location has changed
         viewModelLocation.currentLocation.observe(this) {
             updateDataLocation(it)
-            Log.i("tytgyhu3j2", "request API from CurrentData")
+            binding.getLocationAuto.text = it.locality
         }
-
 
     }
 
-    // logic in preference fragments
+    // logic transition in Preference Fragments
     override fun onPreferenceStartFragment(
         caller: PreferenceFragmentCompat,
         pref: Preference
@@ -157,7 +133,7 @@ class MainActivity : AppCompatActivity(),
 
         return when (pref.key) {
 
-            resources.getString(R.string.dataToDisplayPreference) -> {
+            fromStr(R.string.dataToDisplayPreference) -> {
                 navigationController.navigate(R.id.action_settings_to_settingsDataDisplay)
                 true
             }
@@ -167,6 +143,32 @@ class MainActivity : AppCompatActivity(),
 
     }
 
+
+    override fun onClick(p0: View?) {
+        when (p0!!.id) {
+            // try to update data again if hasn't data in locale storage
+            R.id.buttonUpdateConnect -> {
+                updateData()
+            }
+
+            // when user click on `Get Location Automatically`
+            R.id.getLocationAuto -> {
+                // Check location permission
+                // Check GPS on|off
+                // try to get last location
+                // show dialog with confirm location data fidelity
+                checkPermissionLocation { local ->
+                    dialogLocation(local) { locationFromFunction ->
+                        viewModelLocation.updateCurrentLocation(locationFromFunction)
+                    }.show()
+                }
+
+            }
+
+        }
+    }
+
+
     companion object {
         lateinit var main_context: MainActivity
     }
@@ -175,34 +177,103 @@ class MainActivity : AppCompatActivity(),
     override fun onResume() {
         super.onResume()
 
-        if (WeatherPref.getShPrefWeather() != null) {
-            viewModelWeather.weatherDataObject.value = WeatherPref.getShPrefWeather()
+        // set location name to button `getAutoLocation`
+        setLocationName()
+
+        // If local storage has something data -> show them -> try to update data with internet
+        // Else -> just update data with internet
+        if (getShPrefWeather() != null) {
+            binding.containerMainActivity.visibility = View.VISIBLE
+            binding.progressBar.visibility = View.GONE
+            viewModelWeather.weatherDataObject.value = getShPrefWeather()
+            updateDataBackground()
         } else {
-            val currentFragment = navigationController.currentBackStackEntry?.destination?.label
-            val startFragment = navigationController.graph.startDestDisplayName
-            if (currentFragment != startFragment) {
-                navigationController.navigate(R.id.action_global_notConnection)
-            }
+            updateData()
         }
 
     }
 
+    // Update data from new location object from `RequestLocationDialog`
     private fun updateDataLocation(modelLoc: LocationModel) {
-        if (!InternetConnection.checkForInternet(main_context)) {
-            Toast.makeText(main_context, "Інтернет не працює", Toast.LENGTH_SHORT).show()
-        } else {
-            try {
-                val coordinate = "${modelLoc.lat},${modelLoc.lon}"
-                viewModelWeather.gg(coordinate, "uk") {
-                    if(it == 1) {
-                        WeatherPref.setShPrefLocation(modelLoc)
-                    } else Toast.makeText(this, "Помилка з'єднання", Toast.LENGTH_SHORT).show()
+        if (checkForInternet()) {
+            viewModelWeather.doRequestWeather(
+                modelLoc.locality,
+                fromStr(R.string.request_lang)
+            ) { result ->
+                if (result) {
+                    WeatherPref.setShPrefLocation(modelLoc)
+                } else Toast.makeText(this, fromStr(R.string.errorConnection), Toast.LENGTH_SHORT)
+                    .show()
 
+            }
+        } else {
+            Toast.makeText(main_context, fromStr(R.string.internetNotWorking), Toast.LENGTH_SHORT)
+                .show()
+        }
+    }
+
+    // Display with loading...
+    // Checking #1 - internet connection
+    // Checking #2 - callback from request Weather API
+    // If all are good -> go to `displayWeather`
+    // Else -> show toast error and button reload
+    private fun updateData() {
+        binding.containerMainActivity.visibility = View.INVISIBLE
+        binding.buttonUpdateConnect.visibility = View.GONE
+        binding.progressBar.visibility = View.VISIBLE
+
+        val locationCoordinate = getShPrefLocation()?.locality ?: fromStr(R.string.defaultCity)
+
+        if (checkForInternet()) {
+            viewModelWeather.doRequestWeather(
+                locationCoordinate,
+                fromStr(R.string.request_lang)
+            ) { result ->
+                if (result) {
+                    binding.containerMainActivity.visibility = View.VISIBLE
+                    binding.progressBar.visibility = View.GONE
+
+                } else {
+                    Toast.makeText(this, fromStr(R.string.errorConnection), Toast.LENGTH_SHORT)
+                        .show()
+                    binding.buttonUpdateConnect.visibility = View.VISIBLE
+                    binding.progressBar.visibility = View.GONE
                 }
-            } catch (e: Exception) {
-                Toast.makeText(main_context, e.message, Toast.LENGTH_SHORT).show()
+            }
+        } else {
+            Toast.makeText(main_context, fromStr(R.string.internetNotWorking), Toast.LENGTH_SHORT)
+                .show()
+            binding.buttonUpdateConnect.visibility = View.VISIBLE
+            binding.progressBar.visibility = View.GONE
+        }
+    }
+
+    private fun updateDataBackground() {
+        val locationCoordinate = getShPrefLocation()?.locality ?: fromStr(R.string.defaultCity)
+
+        if (!checkForInternet()) {
+            Toast.makeText(main_context, fromStr(R.string.internetNotWorking), Toast.LENGTH_SHORT)
+                .show()
+        } else {
+            viewModelWeather.doRequestWeather(
+                locationCoordinate,
+                fromStr(R.string.request_lang)
+            ) { result ->
+                if (!result) {
+                    Toast.makeText(
+                        main_context,
+                        fromStr(R.string.errorConnection),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
             }
         }
     }
+
+    private fun setLocationName() {
+        binding.getLocationAuto.text =
+            getShPrefLocation()?.locality ?: fromStr(R.string.defaultCity)
+    }
+
 
 }

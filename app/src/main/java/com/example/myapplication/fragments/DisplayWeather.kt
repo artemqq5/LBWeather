@@ -1,7 +1,7 @@
 package com.example.myapplication.fragments
 
+import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,14 +15,16 @@ import com.example.myapplication.MainActivity.Companion.main_context
 import com.example.myapplication.R
 import com.example.myapplication.adapter.CustomAdapter
 import com.example.myapplication.databinding.FragmentDisplayWeatherBinding
-import com.example.myapplication.helper.InternetConnection
+import com.example.myapplication.helper.FromStr.fromStr
+import com.example.myapplication.helper.StateUnit.isCelsius
+import com.example.myapplication.helper.StateUnit.isKilometer
 import com.example.myapplication.helper.TimeFormat.DAYWEEK_DAY_MONTH_YEAR
 import com.example.myapplication.helper.TimeFormat.HOUR_MINUTE
 import com.example.myapplication.helper.TimeFormat.YEAR_MONTH_DAY
 import com.example.myapplication.helper.TimeFormat.YEAR_MONTH_DAY_HOUR_MINUTE
 import com.example.myapplication.helper.TimeFormat.getParsingTime
-import com.example.myapplication.sharedPreferences.WeatherPref
-import com.example.myapplication.viewmodel.ViewModelLocation
+import com.example.myapplication.network.internetConnection.InternetConnection
+import com.example.myapplication.sharedPreferences.WeatherPref.getShPrefLocation
 import com.example.myapplication.viewmodel.ViewModelWeather
 import com.example.myapplication.weatherModelData.ConditionXX
 import com.example.myapplication.weatherModelData.Hour
@@ -36,7 +38,6 @@ class DisplayWeather : Fragment() {
 
     lateinit var binding: FragmentDisplayWeatherBinding
     private val viewModel: ViewModelWeather by activityViewModels()
-    private val viewModelLocation: ViewModelLocation by activityViewModels()
     private val listWeather = arrayListOf<Hour>()
     private val adapterWeather by lazy {
         CustomAdapter(listWeather, findNavController())
@@ -52,6 +53,7 @@ class DisplayWeather : Fragment() {
         return binding.root
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -91,11 +93,8 @@ class DisplayWeather : Fragment() {
             })
 
         binding.swipeLayout.setOnRefreshListener {
-            val locationCoordinate = WeatherPref.getShPrefLocation()?.let {
-                "${it.lat},${it.lon}"
-            } ?: "Kiev"
+            val locationCoordinate = getShPrefLocation()?.locality ?: fromStr(R.string.defaultCity)
             updateData(locationCoordinate)
-            Log.i("tytgyhu3j2", "request API from SwipeLayout")
         }
 
 
@@ -129,11 +128,14 @@ class DisplayWeather : Fragment() {
                         null,
                         ConditionXX(it.current.condition.icon, it.current.condition.text),
                         it.current.feelslike_c,
+                        it.current.feelslike_f,
                         it.current.humidity,
                         it.current.temp_c,
+                        it.current.temp_f,
                         it.current.last_updated,
                         it.current.uv,
-                        it.current.wind_kph
+                        it.current.wind_kph,
+                        it.current.wind_mph
                     )
                 )
 
@@ -144,6 +146,7 @@ class DisplayWeather : Fragment() {
             adapterWeather.setList(listWeather)
         }
 
+
         // click listener to button details
         binding.detailButton.setOnClickListener {
             val bundleDay = bundleOf("day" to 0)
@@ -153,7 +156,8 @@ class DisplayWeather : Fragment() {
 
     }
 
-    // method to add in list only future forecast
+
+    // method to add in list only further forecast
     private fun List<Hour>.setDataToTime(timeNowDate: Date?) {
 
         this.forEach { hour ->
@@ -179,39 +183,49 @@ class DisplayWeather : Fragment() {
     }
 
     // update current date display
+    @SuppressLint("SetTextI18n")
     private fun WeatherModel.updateCurrent() {
 
         val currentWeather = this.current
 
         binding.cityCountryInfo.text = "${this.location.name}, ${this.location.country}"
-        binding.dateInfo.text = "${
-            this.forecast.forecastday[0].date.getParsingTime(
-                YEAR_MONTH_DAY,
-                DAYWEEK_DAY_MONTH_YEAR
-            )
-        }"
-        binding.currentTemperature.text = "${currentWeather.temp_c} °С"
+        binding.dateInfo.text = this.forecast.forecastday[0].date.getParsingTime(
+            YEAR_MONTH_DAY,
+            DAYWEEK_DAY_MONTH_YEAR
+        )
+
+        binding.currentTemperature.text = if (isCelsius()) {
+            "${currentWeather.temp_c} ${fromStr(R.string.celsius)}"
+        } else "${currentWeather.temp_f} ${fromStr(R.string.fahrenheit)}"
+
+        binding.speedWind.text = if (isKilometer()) {
+            "${currentWeather.wind_kph} ${fromStr(R.string.kph)}"
+        } else "${currentWeather.wind_mph} ${fromStr(R.string.mph)}"
+
         binding.textWeather.text = currentWeather.condition.text
-        binding.speedWind.text = "${currentWeather.wind_kph}\nкм/год"
-        binding.airIndex.text = "${currentWeather.air_quality.gb_defra_index}"
+        binding.uvIndex.text = "${currentWeather.uv}"
         binding.humidity.text = "${currentWeather.humidity} %"
 
     }
 
     private fun updateData(city: String) {
-        if (!InternetConnection.checkForInternet(main_context)) {
+        if (!InternetConnection.checkForInternet()) {
             binding.swipeLayout.isRefreshing = false
-            Toast.makeText(main_context, "Інтернет не працює", Toast.LENGTH_SHORT).show()
+            Toast.makeText(main_context, fromStr(R.string.internetNotWorking), Toast.LENGTH_SHORT)
+                .show()
         } else {
-            try {
-                viewModel.gg(city, "uk") {
-                    if(it == -1) {
-                        Toast.makeText(main_context, "Помилка з'єднання", Toast.LENGTH_SHORT).show()
-                    }
-                    binding.swipeLayout.isRefreshing = false
+            viewModel.doRequestWeather(
+                city,
+                fromStr(R.string.request_lang)
+            ) { result ->
+                if (!result) {
+                    Toast.makeText(
+                        main_context,
+                        fromStr(R.string.errorConnection),
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
-            } catch (e: Exception) {
-                Toast.makeText(main_context, e.message, Toast.LENGTH_SHORT).show()
+                binding.swipeLayout.isRefreshing = false
             }
         }
     }

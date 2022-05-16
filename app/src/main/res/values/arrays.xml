@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="list_temperature">
+        <item>Celsius</item>
+        <item>Fahrenheit</item>
+    </array>
+    <array name="list_temperature_value">
+        <item>celsius</item>
+        <item>fahrenheit</item>
+    </array>
+
+    <array name="list_speed">
+        <item>Kilometer</item>
+        <item>Mile</item>
+    </array>
+    <array name="list_speed_value">
+        <item>kph</item>
+        <item>mph</item>
+    </array>
+
+    <array name="list_times">
+        <item>24h</item>
+        <item>12h</item>
+    </array>
+    <array name="list_times_value">
+        <item>europe</item>
+        <item>america</item>
+    </array>
+
+</resources>

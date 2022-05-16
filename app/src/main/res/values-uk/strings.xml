@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--    CustomAdapter-->
+    <string name="timeNow">Зараз</string>
+
+    <!--    Dialogs-->
+    <string name="location">Локація</string>
+    <string name="youFrom">Ти з</string>
+    <string name="noPermission">Немає дозволу</string>
+    <string name="allowLocation">Дозвольте вікористовувати локацію щоб визначити ваше місце положення</string>
+    <string name="onGPS">Увімкніть GPS</string>
+    <string name="whyGPS">Щоб автоматично визначити ваше місце положення увімкніть GPS</string>
+    <string name="no">Ні</string>
+    <string name="yes">Так</string>
+
+    <!--    DetailsDataDay-->
+    <string name="temperature">Темпепетура</string>
+    <string name="humidity">Вологість</string>
+    <string name="speedWind">Швидкість вітру</string>
+    <string name="sunrise">Схід сонця</string>
+    <string name="sunset">Захід сонця</string>
+    <string name="uv">Ультрафіолет</string>
+
+    <!--    DetailsDataHour-->
+    <string name="tempFeels">По відчуттям</string>
+
+    <!--    DisplayWeather-->
+    <string name="internetNotWorking">Інтернет не працює</string>
+    <string name="errorConnection">Помилка з\'єднання</string>
+    <string name="details">Детальніше</string>
+
+    <!--    LocationRequest-->
+    <string name="noDataLocation">Немає даних про місце розташування</string>
+    <string name="errorGetLocation">Помилка при отриманні локації</string>
+
+    <!--    MainActivity-->
+    <string name="fragment_display">Погода</string>
+    <string name="tomorrow">Завтра</string>
+    <string name="day_after_tomorrow">Післязавтра</string>
+
+    <!--    Other-->
+    <string name="fragment_settings">Налаштування</string>
+    <string name="fragment_details_day">Детально</string>
+    <string name="settingsDataDisplay">Дані відображення</string>
+    <string name="request_lang">uk</string>
+    <string name="kph">км</string>
+    <string name="mph">миль</string>
+
+<!--    Preferences Main -->
+    <string name="displayDataWeather">Відображення даних про погоду</string>
+    <string name="PressToSetting">Нажміть для налаштування</string>
+    <string name="unitOfTemperature">Одиниця вимірювання температури</string>
+    <string name="unitOfSpeed">Одиниця вимірювання швидкості</string>
+    <string name="languageState">Мова</string>
+    <string name="timeFormat">Формат часу</string>
+
+
+<!--    Preferences Display Data-->
+    <string name="displayDataDay">Відображення інформації про день</string>
+    <string name="displayDataHour">Відображення інформації погодинно</string>
+    <string name="rainChance">Ймовірність дощу</string>
+    <string name="snowChance">Ймовірність снігу</string>
+    <string name="uvIndex">Ультрафіолетовий індекс</string>
+    <string name="temperatureFeels">Температура по відчуттям</string>
+
+</resources>
+
+
+
+

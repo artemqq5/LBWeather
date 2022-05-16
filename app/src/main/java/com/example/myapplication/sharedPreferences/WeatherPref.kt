@@ -3,7 +3,7 @@ package com.example.myapplication.sharedPreferences
 import android.annotation.SuppressLint
 import android.content.Context
 import com.example.myapplication.MainActivity.Companion.main_context
-import com.example.myapplication.helper.locationModel.LocationModel
+import com.example.myapplication.location.LocationModel
 import com.example.myapplication.weatherModelData.WeatherModel
 import com.squareup.moshi.Moshi
 

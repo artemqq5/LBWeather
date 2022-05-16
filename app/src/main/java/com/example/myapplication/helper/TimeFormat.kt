@@ -31,5 +31,22 @@ object TimeFormat {
         return returnDate
     }
 
+    fun String.getParsingTimeHour(patternFrom: String, patternTo: String): String {
+
+        val returnDate: String
+
+        val writeFormat = SimpleDateFormat(patternFrom, Locale.US)
+        val readFormat = SimpleDateFormat(patternTo, Locale.US)
+
+        // return data with no parse if format has exception
+        returnDate = try {
+            readFormat.format(writeFormat.parse(this)!!)
+        } catch (e: Exception) {
+            this
+        }
+
+        return returnDate
+    }
+
 
 }

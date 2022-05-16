@@ -1,19 +1,20 @@
-package com.example.myapplication.helper
+package com.example.myapplication.location
 
 import android.Manifest
 import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.location.Geocoder
 import android.location.LocationManager
-import android.util.Log
+import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat.checkSelfPermission
 import com.example.myapplication.MainActivity.Companion.main_context
+import com.example.myapplication.R
 import com.example.myapplication.dialogs.DialogLocationPermission.dialogGPS
 import com.example.myapplication.dialogs.DialogLocationPermission.dialogPermission
-import com.example.myapplication.helper.locationModel.LocationModel
+import com.example.myapplication.helper.FromStr.fromStr
 import com.google.android.gms.location.LocationServices
 import java.util.*
 
@@ -76,14 +77,13 @@ object LocationRequest {
         fusedLocationClient.lastLocation.addOnSuccessListener { location ->
             if (location != null) {
 
-                val geocoder = Geocoder(main_context, Locale.getDefault())
+                val geocoder = Geocoder(main_context, Locale.UK)
                 val finalLocale = geocoder.getFromLocation(
                     location.latitude,
                     location.longitude,
                     1
                 )
 
-                Log.i("tytgyhu3j2", "fusedLocationClient ${finalLocale[0]}")
                 val locationObj = finalLocale[0]
                 func(
                     LocationModel(
@@ -93,8 +93,12 @@ object LocationRequest {
                     )
                 )
             } else {
-                Log.i("tytgyhu3j2", "fusedLocationClient is null")
+                Toast.makeText(main_context, fromStr(R.string.noDataLocation), Toast.LENGTH_SHORT)
+                    .show()
             }
+        }.addOnFailureListener {
+            Toast.makeText(main_context, fromStr(R.string.errorGetLocation), Toast.LENGTH_SHORT)
+                .show()
         }
     }
 

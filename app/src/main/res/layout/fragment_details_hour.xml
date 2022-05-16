@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     tools:context=".fragments.DetailsDataHour">
 
     <TextView
@@ -12,11 +12,11 @@
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
         android:fontFamily="@font/raleway_4"
-        tools:text="Понеділок, 11 Квітень 2022"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Понеділок, 11 Квітень 2022" />
 
     <TextView
         android:id="@+id/timeText"
@@ -24,10 +24,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:fontFamily="@font/open_sans_4"
-        tools:text="03:00"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="@+id/dataText"
-        app:layout_constraintTop_toBottomOf="@+id/dataText" />
+        app:layout_constraintTop_toBottomOf="@+id/dataText"
+        tools:text="03:00" />
 
     <View
         android:id="@+id/view"
@@ -56,64 +56,50 @@
             android:id="@+id/temperatureText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:fontFamily="@font/raleway_4"
-            tools:text="Темпепетура: 14 °С"
-            android:textSize="15sp" />
+            style="@style/moreWeatherText"
+            tools:text="Темпепетура: 14 °С" />
 
         <TextView
             android:id="@+id/feelTempText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:fontFamily="@font/raleway_4"
-            tools:text="По відчуттям: 12 °С"
-            android:textSize="15sp" />
+            style="@style/moreWeatherText"
+            tools:text="По відчуттям: 12 °С" />
 
         <TextView
             android:id="@+id/humidityText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:fontFamily="@font/raleway_4"
-            tools:text="Вологість: 45 %"
-            android:textSize="15sp" />
+            style="@style/moreWeatherText"
+            tools:text="Вологість: 45 %" />
 
         <TextView
             android:id="@+id/chanceRainText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:fontFamily="@font/raleway_4"
-            tools:text="Ймовірність дощу: 22 %"
-            android:textSize="15sp" />
+            style="@style/moreWeatherText"
+            tools:text="Ймовірність дощу: 22 %" />
 
         <TextView
             android:id="@+id/chanceSnowText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:fontFamily="@font/raleway_4"
-            tools:text="Ймовірність снігу: 3 %"
-            android:textSize="15sp" />
+            style="@style/moreWeatherText"
+            tools:text="Ймовірність снігу: 3 %" />
 
         <TextView
             android:id="@+id/windSpeedText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:fontFamily="@font/raleway_4"
-            tools:text="Швидкість вітру: 5 км/год"
-            android:textSize="15sp" />
+            style="@style/moreWeatherText"
+            tools:text="Швидкість вітру: 5 км/год" />
 
         <TextView
             android:id="@+id/uvIndexText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:fontFamily="@font/raleway_4"
-            tools:text="Ультрафіолет (0-8): 3"
-            android:textSize="15sp" />
+            style="@style/moreWeatherText"
+            tools:text="Ультрафіолет (0-8): 3" />
     </LinearLayout>
 
     <TextView
@@ -122,12 +108,12 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:fontFamily="@font/raleway_5"
-        tools:text="Сонячно"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@+id/infoWeatherIcon"
         app:layout_constraintEnd_toEndOf="@+id/linearLayout4"
         app:layout_constraintStart_toEndOf="@+id/infoWeatherIcon"
-        app:layout_constraintTop_toTopOf="@+id/infoWeatherIcon" />
+        app:layout_constraintTop_toTopOf="@+id/infoWeatherIcon"
+        tools:text="Сонячно" />
 
     <ImageView
         android:id="@+id/infoWeatherIcon"
@@ -137,6 +123,7 @@
         android:src="@drawable/ic_image"
         app:layout_constraintStart_toStartOf="@+id/linearLayout4"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout4"
+        tools:ignore="ContentDescription"
         tools:layout_editor_absoluteY="53dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

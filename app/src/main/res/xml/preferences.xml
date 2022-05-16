@@ -1,12 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-
     <Preference
         app:fragment="com.example.myapplication.fragments.settings_fragments"
         app:key="@string/dataToDisplayPreference"
-        app:title="Відображення данних про погоду"
-        app:summary="Нажміть для налатування"
+        app:title="@string/displayDataWeather"
+        app:summary="@string/PressToSetting"
+        app:iconSpaceReserved="false"/>
+
+    <ListPreference
+        app:key="unit_temperature"
+        app:title="@string/unitOfTemperature"
+        app:entries="@array/list_temperature"
+        android:entryValues="@array/list_temperature_value"
+        android:defaultValue="celsius"
+        app:useSimpleSummaryProvider="true"
+        app:iconSpaceReserved="false"/>
+
+    <ListPreference
+        app:key="unit_speed"
+        app:title="@string/unitOfSpeed"
+        app:entries="@array/list_speed"
+        android:entryValues="@array/list_speed_value"
+        android:defaultValue="kph"
+        app:useSimpleSummaryProvider="true"
+        app:iconSpaceReserved="false"/>
+
+    <ListPreference
+        app:key="time_format"
+        app:title="@string/timeFormat"
+        app:entries="@array/list_times"
+        android:entryValues="@array/list_times_value"
+        android:defaultValue="europe"
+        app:useSimpleSummaryProvider="true"
         app:iconSpaceReserved="false"/>
 
 </PreferenceScreen>

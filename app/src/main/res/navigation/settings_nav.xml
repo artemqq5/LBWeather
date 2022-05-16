@@ -9,7 +9,7 @@
         android:id="@+id/settings"
         android:name="com.example.myapplication.fragments.settings_fragments.Settings"
         android:label="@string/fragment_settings"
-        tools:layout="@layout/fragment_settings" >
+        tools:layout="@layout/fragment_settings">
         <action
             android:id="@+id/action_settings_to_settingsDataDisplay"
             app:destination="@id/settingsDataDisplay" />
@@ -17,7 +17,7 @@
     <fragment
         android:id="@+id/settingsDataDisplay"
         android:name="com.example.myapplication.fragments.settings_fragments.SettingsDataDisplay"
-        android:label="@string/settingsDataDisplay" >
+        android:label="@string/settingsDataDisplay">
         <action
             android:id="@+id/action_settingsDataDisplay_to_settings"
             app:destination="@id/settings" />

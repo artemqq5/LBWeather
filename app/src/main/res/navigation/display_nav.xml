@@ -13,7 +13,7 @@
         <action
             android:id="@+id/action_displayWeather_to_detailsDay"
             app:destination="@id/detailsDataDay"
-            app:popUpTo="@navigation/main_nav"
+            app:popUpTo="@navigation/display_nav"
             app:popUpToInclusive="true">
             <argument
                 android:name="day"
@@ -23,7 +23,7 @@
         <action
             android:id="@+id/action_displayWeather_to_detailsHour"
             app:destination="@id/detailsDataHour"
-            app:popUpTo="@navigation/main_nav"
+            app:popUpTo="@navigation/display_nav"
             app:popUpToInclusive="true">
             <argument
                 android:name="timeHour"
@@ -32,7 +32,7 @@
         <action
             android:id="@+id/action_displayWeather_to_settings_nav2"
             app:destination="@id/settings_nav"
-            app:popUpTo="@navigation/main_nav"
+            app:popUpTo="@navigation/display_nav"
             app:popUpToInclusive="true" />
     </fragment>
     <fragment

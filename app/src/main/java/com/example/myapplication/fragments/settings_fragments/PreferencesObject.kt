@@ -1,7 +1,11 @@
 package com.example.myapplication.fragments.settings_fragments
 
+import android.content.SharedPreferences
 import androidx.preference.PreferenceManager
 import com.example.myapplication.MainActivity.Companion.main_context
+import com.example.myapplication.R
+import com.example.myapplication.helper.FromStr.fromArray
+import com.example.myapplication.helper.FromStr.fromStr
 
 object PreferencesObject {
 
@@ -14,10 +18,51 @@ object PreferencesObject {
     const val ULTRAVIOLET_HOUR = "uv_index_hour"
     const val FEEL_TEMP_HOUR = "feel_temp_hour"
 
+    const val UNIT_OF_TEMPERATURE = "unit_temperature"
+    const val UNIT_OF_SPEED = "unit_speed"
+    const val TIME_FORMAT_APP = "time_format"
+
     // get shared shared preferences
-    private val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(main_context)
+    val sharedPreferences: SharedPreferences by lazy {
+        PreferenceManager.getDefaultSharedPreferences(main_context)
+    }
 
     // get value from shared preferences
     fun getValuePreference(prefKey: String) = sharedPreferences.getBoolean(prefKey, false)
+
+    fun getValuePreferenceTimeFormat(prefKey: String): String = sharedPreferences.getString(
+        prefKey, fromArray(R.array.list_times_value, 0)
+    ) ?: fromArray(R.array.list_times_value, 0)
+
+    fun getValuePreferenceSpeed(prefKey: String): String = sharedPreferences.getString(
+        prefKey, fromArray(R.array.list_speed_value, 0)
+    ) ?: fromArray(R.array.list_speed_value, 0)
+
+    fun getValuePreferenceTemperature(prefKey: String): String {
+        val value = sharedPreferences.getString(
+            prefKey, fromArray(R.array.list_temperature_value, 0)
+        ) ?: fromArray(R.array.list_temperature_value, 0)
+
+        return parseUnitOfTemperature(value)
+    }
+
+    private fun parseUnitOfTemperature(str: String): String {
+        return when (str) {
+            fromArray(R.array.list_temperature_value, 0) -> {
+                fromStr(
+                    R.string.celsius
+                )
+            }
+
+            fromArray(R.array.list_temperature_value, 1) -> {
+                fromStr(
+                    R.string.fahrenheit
+                )
+            }
+            else -> fromStr(
+                R.string.celsius
+            )
+        }
+    }
 
 }

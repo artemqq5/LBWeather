@@ -47,73 +47,57 @@
             android:id="@+id/temperatureText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:fontFamily="@font/open_sans_3"
-            tools:text="Темпепетура: 11/16 °С"
-            android:textSize="15sp" />
+            style="@style/moreWeatherText"
+            tools:text="Темпепетура: 11/16 °С" />
 
         <TextView
             android:id="@+id/humidityText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:fontFamily="@font/open_sans_3"
-            tools:text="Вологість: 45 %"
-            android:textSize="15sp" />
+            style="@style/moreWeatherText"
+            tools:text="Вологість: 45 %" />
 
         <TextView
             android:id="@+id/chanceRainText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:fontFamily="@font/open_sans_3"
-            tools:text="Ймовірність дощу: 22 %"
-            android:textSize="15sp" />
+            style="@style/moreWeatherText"
+            tools:text="Ймовірність дощу: 22 %" />
 
         <TextView
             android:id="@+id/chanceSnowText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:fontFamily="@font/open_sans_3"
-            tools:text="Ймовірність снігу: 3 %"
-            android:textSize="15sp" />
+            style="@style/moreWeatherText"
+            tools:text="Ймовірність снігу: 3 %" />
 
         <TextView
             android:id="@+id/windSpeedText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:fontFamily="@font/open_sans_3"
-            tools:text="Швидкість вітру: 5 км/год"
-            android:textSize="15sp" />
+            style="@style/moreWeatherText"
+            tools:text="Швидкість вітру: 5 км/год" />
 
         <TextView
             android:id="@+id/uvIndexText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:fontFamily="@font/open_sans_3"
-            tools:text="Ультрафіолет (0-8): 3"
-            android:textSize="15sp" />
+            style="@style/moreWeatherText"
+            tools:text="Ультрафіолет (0-8): 3" />
 
         <TextView
             android:id="@+id/sunriseText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:fontFamily="@font/open_sans_3"
-            tools:text="Схід сонця: 04:12"
-            android:textSize="15sp" />
+            style="@style/moreWeatherText"
+            tools:text="Схід сонця: 04:12" />
 
         <TextView
             android:id="@+id/sunset"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:fontFamily="@font/open_sans_3"
-            tools:text="Захід сонця: 21:09"
-            android:textSize="15sp" />
+            style="@style/moreWeatherText"
+            tools:text="Захід сонця: 21:09" />
     </LinearLayout>
 
     <TextView
@@ -122,12 +106,12 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:fontFamily="@font/raleway_5"
-        tools:text="Сонячно"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@+id/infoAboutImage"
         app:layout_constraintEnd_toEndOf="@+id/linearLayout4"
         app:layout_constraintStart_toEndOf="@+id/infoAboutImage"
-        app:layout_constraintTop_toTopOf="@+id/infoAboutImage" />
+        app:layout_constraintTop_toTopOf="@+id/infoAboutImage"
+        tools:text="Сонячно" />
 
     <ImageView
         android:id="@+id/infoAboutImage"
@@ -137,6 +121,7 @@
         android:src="@drawable/ic_image"
         app:layout_constraintStart_toStartOf="@+id/linearLayout4"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout4"
+        tools:ignore="ContentDescription"
         tools:layout_editor_absoluteY="53dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,14 +1,12 @@
 package com.example.myapplication.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.myapplication.network.WeatherRepository
+import com.example.myapplication.network.requestAPI.WeatherRepository
 import com.example.myapplication.sharedPreferences.WeatherPref
 import com.example.myapplication.weatherModelData.WeatherModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -22,10 +20,10 @@ class ViewModelWeather : ViewModel() {
         MutableLiveData<WeatherModel>()
     }
 
-    fun gg(
+    fun doRequestWeather(
         location: String,
         language: String,
-        func: (Int) -> Unit
+        func: (Boolean) -> Unit
     ) {
         viewModelScope.launch(Dispatchers.IO) {
             getDataFromServer(location, language, func)
@@ -37,33 +35,30 @@ class ViewModelWeather : ViewModel() {
     private suspend fun getDataFromServer(
         location: String,
         language: String,
-        func: (Int) -> Unit
+        func: (Boolean) -> Unit
     ) {
-        var result = 1
+        var result = true
 
-        Log.i("tytgyhu3j2", "request to API Weather")
         val job = viewModelScope.launch(Dispatchers.IO) {
             try {
-                weatherRepository.getWeatherData(location, language).body()?.let {
-                    weatherDataObject.postValue(it)
-                    WeatherPref.setShPrefWeather(it)
+                weatherRepository.getWeatherData(location, language).run {
+                    if (this.isSuccessful) {
+                        weatherDataObject.postValue(this.body())
+                        WeatherPref.setShPrefWeather(this.body()!!)
+                    } else {
+                        result = false
+                    }
                 }
 
             } catch (e: Exception) {
-                Log.i("tytgyhu3j2", " отримання інфо ${e.message}")
-                result = -1
+                result = false
             }
 
         }
 
         job.join()
         withContext(Dispatchers.Main) {
-            try {
-                func(result)
-            } catch (e: Exception) {
-                Log.i("tytgyhu3j2", " перехід  ${e.message}")
-            }
-
+            func(result)
         }
 
     }

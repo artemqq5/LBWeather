@@ -1,13 +1,71 @@
 <resources>
-    <string name="app_name">LBWeather</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="app_name" translatable="false">LBWeather</string>
 
-    <string name="fragment_display">Погода</string>
-    <string name="fragment_settings">Налаштування</string>
-    <string name="fragment_details_day">Детально</string>
-    <string name="tomorrow">Завтра</string>
-    <string name="day_after_tomorrow">Післязавтра</string>
-    <string name="fragment_splash_screen">fragment_splash_screen</string>
-    <string name="dataToDisplayPreference">dataToDisplayPreference</string>
-    <string name="settingsDataDisplay">Дані відображення</string>
+    <!--    CustomAdapter-->
+    <string name="timeNow">Now</string>
+    <string name="celsius" translatable="false">°С</string>
+    <string name="fahrenheit" translatable="false">°F</string>
+
+    <!--    Dialogs-->
+    <string name="location">Location</string>
+    <string name="youFrom">Are you from</string>
+    <string name="noPermission">No permission</string>
+    <string name="allowLocation">Allow the location to be used to determine your location</string>
+    <string name="onGPS">Turn on GPS</string>
+    <string name="whyGPS">To automatically determine your location, turn on GPS</string>
+    <string name="no">No</string>
+    <string name="yes">Yes</string>
+
+    <!--    DetailsDataDay-->
+    <string name="temperature">Temperature</string>
+    <string name="humidity">Humidity</string>
+    <string name="speedWind">Wind speed</string>
+    <string name="sunrise">Sunrise</string>
+    <string name="sunset">Sunset</string>
+    <string name="uv">Ultraviolet</string>
+
+    <!--    DetailsDataHour-->
+    <string name="tempFeels">Feelings</string>
+
+    <!--    DisplayWeather-->
+    <string name="internetNotWorking">The internet doesn\'t work</string>
+    <string name="errorConnection">Connection error</string>
+    <string name="details">More</string>
+
+    <!--    LocationRequest-->
+    <string name="noDataLocation">No location data</string>
+    <string name="errorGetLocation">Error getting location</string>
+
+    <!--    MainActivity-->
+    <string name="fragment_display">Weather</string>
+    <string name="tomorrow">Tomorrow</string>
+    <string name="day_after_tomorrow">Day after tomorrow</string>
+    <string name="dataToDisplayPreference" translatable="false">dataToDisplayPreference</string>
+    <string name="defaultCity" translatable="false">Kiev</string>
+
+
+    <!--    Other-->
+    <string name="fragment_settings">Settings</string>
+    <string name="fragment_details_day">Details</string>
+    <string name="settingsDataDisplay">Display data</string>
+    <string name="request_lang">en</string>
+    <string name="kph">kph</string>
+    <string name="mph">mph</string>
+
+    <!--    Preferences Main -->
+    <string name="displayDataWeather">Display weather data</string>
+    <string name="PressToSetting">Click to setting</string>
+    <string name="unitOfTemperature">Unit of measurement temperature</string>
+    <string name="unitOfSpeed">Unit of measurement speed</string>
+    <string name="languageState">Language</string>
+    <string name="timeFormat">Time format</string>
+
+    <!--    Preferences Display Data-->
+    <string name="displayDataDay">Display information about the day</string>
+    <string name="displayDataHour">Display information hourly</string>
+    <string name="rainChance">Chance of rain</string>
+    <string name="snowChance">Chance of snow</string>
+    <string name="uvIndex">Ultraviolet index</string>
+    <string name="temperatureFeels">Feeling temperature</string>
+
 </resources>

@@ -1,4 +1,4 @@
-package com.example.myapplication.helper.locationModel
+package com.example.myapplication.location
 
 import com.squareup.moshi.JsonClass
 
