@@ -11,4 +11,4 @@ to show a list of weather data, I used the bottom sheet and attached it to the f
 
 I tried to follow the principles SOLID and I used pattern MVVM
 
-![alt text](img_1) ![alt text](img_2) ![alt text](img_3)
+![img_1](img_1.jpg) ![img_2](img_2.jpg) ![img_3](img_3.jpg)
