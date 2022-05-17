@@ -10,3 +10,5 @@ I also used Shared Preference and Glide
 to show a list of weather data, I used the bottom sheet and attached it to the final text element to improve the display. 
 
 I tried to follow the principles SOLID and I used pattern MVVM
+
+![alt text](img_1) ![alt text](img_2) ![alt text](img_3)
