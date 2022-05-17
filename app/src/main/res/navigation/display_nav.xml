@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/displayWeather"
-        android:name="com.example.myapplication.fragments.DisplayWeather"
+        android:name="com.lbweather.myapplication.fragments.DisplayWeather"
         android:label="@string/fragment_display"
         tools:layout="@layout/fragment_display_weather">
         <action
@@ -27,7 +27,7 @@
             app:popUpToInclusive="true">
             <argument
                 android:name="timeHour"
-                app:argType="com.example.myapplication.weatherModelData.Hour" />
+                app:argType="com.lbweather.myapplication.weatherModelData.Hour" />
         </action>
         <action
             android:id="@+id/action_displayWeather_to_settings_nav2"
@@ -37,7 +37,7 @@
     </fragment>
     <fragment
         android:id="@+id/detailsDataDay"
-        android:name="com.example.myapplication.fragments.DetailsDataDay"
+        android:name="com.lbweather.myapplication.fragments.DetailsDataDay"
         android:label="@string/fragment_details_day"
         tools:layout="@layout/fragment_details_day">
         <action
@@ -46,7 +46,7 @@
     </fragment>
     <fragment
         android:id="@+id/detailsDataHour"
-        android:name="com.example.myapplication.fragments.DetailsDataHour"
+        android:name="com.lbweather.myapplication.fragments.DetailsDataHour"
         android:label="@string/fragment_details_day"
         tools:layout="@layout/fragment_details_hour">
         <action
