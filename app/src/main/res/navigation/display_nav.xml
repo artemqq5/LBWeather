@@ -14,12 +14,7 @@
             android:id="@+id/action_displayWeather_to_detailsDay"
             app:destination="@id/detailsDataDay"
             app:popUpTo="@navigation/display_nav"
-            app:popUpToInclusive="true">
-            <argument
-                android:name="day"
-                android:defaultValue="1"
-                app:argType="integer" />
-        </action>
+            app:popUpToInclusive="true"/>
         <action
             android:id="@+id/action_displayWeather_to_detailsHour"
             app:destination="@id/detailsDataHour"

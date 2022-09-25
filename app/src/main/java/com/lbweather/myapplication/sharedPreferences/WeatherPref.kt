@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import com.lbweather.myapplication.MainActivity.Companion.main_context
 import com.lbweather.myapplication.location.LocationModel
+import com.lbweather.myapplication.sharedPreferences.WeatherPref.toJson
 import com.lbweather.myapplication.weatherModelData.WeatherModel
 import com.squareup.moshi.Moshi
 
@@ -18,17 +19,13 @@ object WeatherPref {
         main_context.getSharedPreferences(LOCATION_KEY, Context.MODE_PRIVATE)
     }
 
-
-    @SuppressLint("CommitPrefEdits")
-    fun setShPrefWeather(weatherModel: WeatherModel) {
-        sharedWeather.edit().putString(
-            WEATHER_MODEL_KEY, weatherModel.toJson()
-        ).apply()
-    }
-
-    fun getShPrefWeather(): WeatherModel? {
-        return sharedWeather.getString(WEATHER_MODEL_KEY, null)?.toWeatherModel()
-    }
+    var weatherProperty: WeatherModel?
+        get() = sharedWeather.getString(WEATHER_MODEL_KEY, null)?.toWeatherModel()
+        set(value) {
+            sharedWeather.edit().putString(
+                WEATHER_MODEL_KEY, value?.toJson()
+            ).apply()
+        }
 
     @SuppressLint("CommitPrefEdits")
     fun setShPrefLocation(locationModel: LocationModel) {

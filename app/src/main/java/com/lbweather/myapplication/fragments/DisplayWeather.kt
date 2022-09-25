@@ -11,10 +11,13 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.lbweather.myapplication.MainActivity.Companion.main_context
 import com.lbweather.myapplication.R
 import com.lbweather.myapplication.adapter.CustomAdapter
 import com.lbweather.myapplication.databinding.FragmentDisplayWeatherBinding
+import com.lbweather.myapplication.dialogs.DialogInfo.dialogInfo
+import com.lbweather.myapplication.dialogs.DialogLocation
 import com.lbweather.myapplication.helper.FromStr.fromStr
 import com.lbweather.myapplication.helper.StateUnit.isCelsius
 import com.lbweather.myapplication.helper.StateUnit.isKilometer
@@ -23,21 +26,24 @@ import com.lbweather.myapplication.helper.TimeFormat.HOUR_MINUTE
 import com.lbweather.myapplication.helper.TimeFormat.YEAR_MONTH_DAY
 import com.lbweather.myapplication.helper.TimeFormat.YEAR_MONTH_DAY_HOUR_MINUTE
 import com.lbweather.myapplication.helper.TimeFormat.getParsingTime
+import com.lbweather.myapplication.location.LocationRequest
 import com.lbweather.myapplication.network.internetConnection.InternetConnection
 import com.lbweather.myapplication.sharedPreferences.WeatherPref.getShPrefLocation
+import com.lbweather.myapplication.viewmodel.ViewModelLocation
 import com.lbweather.myapplication.viewmodel.ViewModelWeather
 import com.lbweather.myapplication.weatherModelData.ConditionXX
-import com.lbweather.myapplication.weatherModelData.WeatherModel
-import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.lbweather.myapplication.weatherModelData.Hour
+import com.lbweather.myapplication.weatherModelData.WeatherModel
+import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.util.*
 
-
+@AndroidEntryPoint
 class DisplayWeather : Fragment() {
 
     lateinit var binding: FragmentDisplayWeatherBinding
     private val viewModel: ViewModelWeather by activityViewModels()
+    private val viewModelLocation: ViewModelLocation by activityViewModels()
     private val listWeather = arrayListOf<Hour>()
     private val adapterWeather by lazy {
         CustomAdapter(listWeather, findNavController())
@@ -47,7 +53,7 @@ class DisplayWeather : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         binding = FragmentDisplayWeatherBinding.inflate(inflater)
         return binding.root
@@ -96,6 +102,7 @@ class DisplayWeather : Fragment() {
             val locationCoordinate = getShPrefLocation()?.locality ?: fromStr(R.string.defaultCity)
             updateData(locationCoordinate)
         }
+
 
 
         // observe on liveData with WeatherModel object
@@ -149,10 +156,31 @@ class DisplayWeather : Fragment() {
 
         // click listener to button details
         binding.detailButton.setOnClickListener {
-            val bundleDay = bundleOf("day" to 0)
-            findNavController().navigate(R.id.action_displayWeather_to_detailsDay, bundleDay)
+            findNavController().navigate(R.id.action_displayWeather_to_detailsDay)
         }
 
+        binding.settingButton.setOnClickListener {
+            findNavController().navigate(R.id.action_displayWeather_to_settings_nav2)
+        }
+
+        binding.infoButton.setOnClickListener {
+            dialogInfo {
+                // callback
+            }.show()
+        }
+
+        // when user click on `Get Location Automatically`
+        binding.cityCountryInfo.setOnClickListener {
+            // Check location permission
+            // Check GPS on|off
+            // try to get last location
+            // show dialog with confirm location data fidelity
+            LocationRequest.checkPermissionLocation { local ->
+                DialogLocation.dialogLocation(local) { locationFromFunction ->
+                    viewModelLocation.updateCurrentLocation(locationFromFunction)
+                }.show()
+            }
+        }
 
     }
 
