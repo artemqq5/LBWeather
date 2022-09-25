@@ -12,6 +12,9 @@
     <string name="whyGPS">Щоб автоматично визначити ваше місце положення увімкніть GPS</string>
     <string name="no">Ні</string>
     <string name="yes">Так</string>
+    <string name="ok">Добре</string>
+    <string name="info">Як встановити локацію?</string>
+    <string name="infoMessage">Тобі потрібно лише натиснути на назву своєї поточної локації</string>
 
     <!--    DetailsDataDay-->
     <string name="temperature">Темпепетура</string>

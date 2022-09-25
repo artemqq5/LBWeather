@@ -21,21 +21,48 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <ImageButton
+                android:id="@+id/settingButton"
+                android:layout_width="0dp"
+                android:layout_height="36dp"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_settings"
+                app:layout_constraintBottom_toBottomOf="@+id/dateInfo"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintStart_toEndOf="@+id/cityCountryInfo"
+                app:layout_constraintTop_toTopOf="@+id/cityCountryInfo"
+                tools:ignore="SpeakableTextPresentCheck" />
+
+            <ImageButton
+                android:id="@+id/infoButton"
+                android:layout_width="0dp"
+                android:layout_height="36dp"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_info"
+                app:layout_constraintBottom_toBottomOf="@+id/dateInfo"
+                app:layout_constraintEnd_toStartOf="@+id/cityCountryInfo"
+                app:layout_constraintHorizontal_chainStyle="spread"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/cityCountryInfo"
+                tools:ignore="SpeakableTextPresentCheck" />
+
+
             <TextView
                 android:id="@+id/cityCountryInfo"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
                 android:layout_marginTop="20dp"
-                android:layout_marginEnd="15dp"
                 android:fontFamily="@font/raleway_3"
                 android:gravity="center"
                 android:text="none"
                 android:textColor="@color/white"
                 android:textSize="28sp"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_weight="4"
+                app:layout_constraintEnd_toStartOf="@+id/settingButton"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/infoButton"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="HardcodedText"
                 tools:text="Полтава, Україна" />

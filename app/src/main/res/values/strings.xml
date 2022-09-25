@@ -15,6 +15,9 @@
     <string name="whyGPS">To automatically determine your location, turn on GPS</string>
     <string name="no">No</string>
     <string name="yes">Yes</string>
+    <string name="ok">OK</string>
+    <string name="info">how to set location?</string>
+    <string name="infoMessage">you just need to click on your location name now.</string>
 
     <!--    DetailsDataDay-->
     <string name="temperature">Temperature</string>
@@ -67,5 +70,6 @@
     <string name="snowChance">Chance of snow</string>
     <string name="uvIndex">Ultraviolet index</string>
     <string name="temperatureFeels">Feeling temperature</string>
+
 
 </resources>
