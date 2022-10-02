@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="5dp"
+    android:layout_marginTop="20dp"
+    android:layout_marginEnd="20dp"
+    android:layout_marginStart="20dp"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start|center_vertical"
+            android:layout_margin="10dp"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/cityCountryInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/raleway_5"
+                android:gravity="start"
+                android:text="none"
+                android:textColor="#CC2E2E2E"
+                android:textSize="18sp"
+                tools:ignore="HardcodedText"
+                tools:text="Полтава, Україна" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/latCoordinate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans_2"
+                    android:gravity="start"
+                    android:text="none"
+                    android:textColor="#CC2E2E2E"
+                    android:textSize="12sp"
+                    android:layout_marginEnd="10dp"
+                    tools:ignore="HardcodedText"
+                    tools:text="lat 50.450001"/>
+                <TextView
+                    android:id="@+id/lonCoordinate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans_2"
+                    android:gravity="start"
+                    android:text="none"
+                    android:textColor="#CC2E2E2E"
+                    android:textSize="12sp"
+                    tools:ignore="HardcodedText"
+                    tools:text="lon 30.523333"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/statusUse"
+            android:visibility="visible"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|top"
+            android:fontFamily="@font/open_sans_2"
+            android:gravity="center"
+            android:text="@string/active_location"
+            android:layout_margin="10dp"
+            android:textColor="#009688"
+            android:textSize="14sp"
+            tools:ignore="HardcodedText"
+            android:drawablePadding="5dp"
+            app:drawableEndCompat="@drawable/ic_dot" />
+    </FrameLayout>
+
+
+
+
+
+</androidx.cardview.widget.CardView>

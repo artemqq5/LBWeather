@@ -29,6 +29,9 @@
             app:destination="@id/settings_nav"
             app:popUpTo="@navigation/display_nav"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_displayWeather_to_dialogListLocations"
+            app:destination="@id/dialogListLocations" />
     </fragment>
     <fragment
         android:id="@+id/detailsDataDay"
@@ -49,5 +52,14 @@
             app:destination="@id/displayWeather" />
     </fragment>
     <include app:graph="@navigation/settings_nav" />
+    <dialog
+        android:id="@+id/dialogListLocations"
+        android:name="com.lbweather.myapplication.dialogs.DialogListLocations"
+        android:label="dialog_locations"
+        tools:layout="@layout/dialog_locations" >
+        <action
+            android:id="@+id/action_dialogListLocations_to_displayWeather"
+            app:destination="@id/displayWeather" />
+    </dialog>
 
 </navigation>

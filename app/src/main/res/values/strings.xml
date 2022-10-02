@@ -33,7 +33,7 @@
     <!--    DisplayWeather-->
     <string name="internetNotWorking">The internet doesn\'t work</string>
     <string name="errorConnection">Connection error</string>
-    <string name="details">More</string>
+    <string name="details">Forecast for 3 days</string>
 
     <!--    LocationRequest-->
     <string name="noDataLocation">No location data</string>
@@ -70,6 +70,9 @@
     <string name="snowChance">Chance of snow</string>
     <string name="uvIndex">Ultraviolet index</string>
     <string name="temperatureFeels">Feeling temperature</string>
+    <string name="list_of_location">List of location</string>
+    <string name="active_location">active</string>
+    <string name="current">current</string>
 
 
 </resources>

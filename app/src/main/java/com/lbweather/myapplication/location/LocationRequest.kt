@@ -2,6 +2,8 @@ package com.lbweather.myapplication.location
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Geocoder
 import android.location.LocationManager
@@ -11,28 +13,30 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat.checkSelfPermission
 import com.lbweather.myapplication.R
-import com.lbweather.myapplication.MainActivity.Companion.main_context
 import com.lbweather.myapplication.dialogs.DialogLocationPermission.dialogGPS
 import com.lbweather.myapplication.dialogs.DialogLocationPermission.dialogPermission
 import com.lbweather.myapplication.helper.FromStr.fromStr
 import com.google.android.gms.location.LocationServices
+import com.lbweather.myapplication.MainActivity
+import dagger.hilt.android.qualifiers.ApplicationContext
 import java.util.*
+import javax.inject.Inject
 
 
-object LocationRequest {
+class LocationRequest @Inject constructor(@ApplicationContext private val context: Context) {
 
     private val fusedLocationClient by lazy {
-        LocationServices.getFusedLocationProviderClient(main_context)
+        LocationServices.getFusedLocationProviderClient(context)
     }
 
     private val enabled by lazy {
-        main_context.getSystemService(AppCompatActivity.LOCATION_SERVICE) as LocationManager
+        context.getSystemService(AppCompatActivity.LOCATION_SERVICE) as LocationManager
     }
 
     private lateinit var locationPermissionRequest: ActivityResultLauncher<String>
 
-    fun locationRequestInit() {
-        locationPermissionRequest = main_context.registerForActivityResult(
+    fun locationRequestInit(activity: AppCompatActivity) {
+        locationPermissionRequest = activity.registerForActivityResult(
             ActivityResultContracts.RequestPermission()
         ) { permission ->
 
@@ -51,7 +55,7 @@ object LocationRequest {
 
     fun checkPermissionLocation(func: (LocationModel) -> Unit) {
         if (checkSelfPermission(
-                main_context,
+                context,
                 Manifest.permission.ACCESS_COARSE_LOCATION
             ) == PackageManager.PERMISSION_GRANTED
         ) {
@@ -77,7 +81,7 @@ object LocationRequest {
         fusedLocationClient.lastLocation.addOnSuccessListener { location ->
             if (location != null) {
 
-                val geocoder = Geocoder(main_context, Locale.UK)
+                val geocoder = Geocoder(context, Locale.UK)
                 val finalLocale = geocoder.getFromLocation(
                     location.latitude,
                     location.longitude,
@@ -93,11 +97,11 @@ object LocationRequest {
                     )
                 )
             } else {
-                Toast.makeText(main_context, fromStr(R.string.noDataLocation), Toast.LENGTH_SHORT)
+                Toast.makeText(context, fromStr(R.string.noDataLocation), Toast.LENGTH_SHORT)
                     .show()
             }
         }.addOnFailureListener {
-            Toast.makeText(main_context, fromStr(R.string.errorGetLocation), Toast.LENGTH_SHORT)
+            Toast.makeText(context, fromStr(R.string.errorGetLocation), Toast.LENGTH_SHORT)
                 .show()
         }
     }
