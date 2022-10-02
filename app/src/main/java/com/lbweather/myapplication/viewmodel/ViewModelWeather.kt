@@ -25,28 +25,17 @@ class ViewModelWeather @Inject constructor(
 
     fun doRequestWeather(
         location: String,
-        language: String,
-        func: (Boolean) -> Unit
+        language: String
     ) {
-
-        var result = true
 
         val coroutineHandler = CoroutineExceptionHandler { _, throwable ->
             Log.i("myLog get Weather data exception", throwable.toString())
+            _weatherDataObject.postValue(null)
         }
 
         viewModelScope.launch(Dispatchers.IO + coroutineHandler) {
             weatherRepository.getWeatherData(location, language).run {
-                if (this.isSuccessful) {
-                    _weatherDataObject.postValue(this.body())
-                    weatherProperty = this.body()
-                } else {
-                    result = false
-                }
-
-                withContext(Dispatchers.Main) {
-                    func(result)
-                }
+                _weatherDataObject.postValue(this.body())
             }
 
         }

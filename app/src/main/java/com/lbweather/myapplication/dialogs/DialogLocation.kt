@@ -8,7 +8,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 object DialogLocation {
 
-    val dialogLocation: (LocationModel, (LocationModel) -> Unit) -> MaterialAlertDialogBuilder =
+    val dialogLocation: (LocationModel, (LocationModel?) -> Unit) -> MaterialAlertDialogBuilder =
         { location, requestFunction ->
             MaterialAlertDialogBuilder(main_context)
                 .setTitle(fromStr(R.string.location))
