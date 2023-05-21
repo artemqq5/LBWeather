@@ -4,148 +4,102 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg"
-    tools:context=".fragments.DisplayWeather">
+    android:layout_gravity="bottom"
+    android:background="#1A000000"
+    tools:context=".presentation.displayFragment.DisplayWeather">
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipeLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
-            <FrameLayout
-                android:id="@+id/locationBox"
+            <TextView
+                android:id="@+id/locationText"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="20dp"
-                android:background="@drawable/bgbg"
-                android:padding="10dp"
-                app:layout_constraintEnd_toStartOf="@+id/settingButton"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintHorizontal_chainStyle="packed"
-                app:layout_constraintHorizontal_weight="4"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <ImageView
-                    android:layout_width="18dp"
-                    android:layout_height="18dp"
-                    android:layout_gravity="end|top"
-                    android:src="@drawable/ic_add_location" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="start|center_vertical"
-                    android:orientation="vertical"
-                    android:paddingEnd="18dp"
-                    tools:ignore="RtlSymmetry">
-
-                    <TextView
-                        android:id="@+id/cityCountryInfo"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/raleway_3"
-                        android:gravity="start"
-                        android:text="none"
-                        android:textColor="#CC2E2E2E"
-                        android:textSize="28sp"
-                        tools:ignore="HardcodedText"
-                        tools:text="Полтава, Україна" />
-
-                    <TextView
-                        android:id="@+id/dateInfo"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/raleway_6"
-                        android:gravity="start"
-                        android:text="none"
-                        android:textColor="#CC2E2E2E"
-                        android:textSize="16sp"
-                        tools:ignore="HardcodedText"
-                        tools:text="Понеділок, 11 Квітень 2022" />
-                </LinearLayout>
-            </FrameLayout>
-
-
-            <ImageButton
-                android:id="@+id/settingButton"
-                android:layout_width="0dp"
-                android:layout_height="36dp"
-                android:layout_marginEnd="20dp"
-                android:background="@android:color/transparent"
-                android:src="@drawable/ic_settings"
-                app:layout_constraintBottom_toBottomOf="@+id/locationBox"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="50dp"
+                android:layout_marginEnd="10dp"
+                android:fontFamily="@font/raleway_4"
+                android:gravity="center"
+                android:textColor="#2C2C2C"
+                android:textSize="28sp"
+                app:layout_constraintBottom_toTopOf="@+id/locationTemperature"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintHorizontal_weight="1"
-                app:layout_constraintStart_toEndOf="@+id/locationBox"
-                app:layout_constraintTop_toTopOf="@+id/locationBox"
-                tools:ignore="SpeakableTextPresentCheck" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="packed"
+                tools:text="Montreal" />
 
-
-            <LinearLayout
-                android:id="@+id/linearLayout6"
+            <TextView
+                android:id="@+id/locationTemperature"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
-                android:background="@drawable/bg_weather"
-                android:orientation="vertical"
-                app:layout_constraintEnd_toEndOf="@+id/settingButton"
-                app:layout_constraintStart_toStartOf="@+id/locationBox"
-                app:layout_constraintTop_toBottomOf="@+id/locationBox">
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/open_sans_1"
+                android:gravity="center"
+                android:textColor="#2C2C2C"
+                android:textSize="68sp"
+                app:layout_constraintBottom_toTopOf="@+id/conditionText"
+                app:layout_constraintEnd_toEndOf="@+id/locationText"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="@+id/locationText"
+                app:layout_constraintTop_toBottomOf="@+id/locationText"
+                tools:text="19°" />
 
-                <TextView
-                    android:id="@+id/currentTemperature"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_margin="15dp"
-                    android:fontFamily="@font/open_sans_1"
-                    android:text="0"
-                    android:textColor="#CCFFFFFF"
-                    android:textSize="86sp"
-                    tools:ignore="HardcodedText"
-                    tools:text="19 °С" />
-
-                <TextView
-                    android:id="@+id/textWeather"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginEnd="15dp"
-                    android:layout_marginBottom="15dp"
-                    android:fontFamily="@font/raleway_3"
-                    android:text="none"
-                    android:textColor="@color/white"
-                    android:textSize="18sp"
-                    tools:ignore="HardcodedText"
-                    tools:text="Переважно сонячно" />
-            </LinearLayout>
-
-            <Button
-                android:id="@+id/detailButton"
+            <TextView
+                android:id="@+id/conditionText"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:layout_marginBottom="15dp"
-                android:text="@string/details"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:textSize="12sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/linearLayout6"
-                app:layout_constraintStart_toStartOf="@+id/linearLayout6"
-                app:layout_constraintTop_toBottomOf="@+id/linearLayout6"
-                app:layout_constraintVertical_bias="0.0" />
+                android:fontFamily="@font/raleway_4"
+                android:gravity="center"
+                android:textColor="#6E6E6E"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toTopOf="@+id/highTemperature"
+                app:layout_constraintEnd_toEndOf="@+id/locationTemperature"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="@+id/locationTemperature"
+                app:layout_constraintTop_toBottomOf="@+id/locationTemperature"
+                tools:text="Mostly Clear" />
+
+            <TextView
+                android:id="@+id/highTemperature"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
+                android:fontFamily="@font/open_sans_3"
+                android:gravity="center_vertical|end"
+                android:textColor="#2C2C2C"
+                android:textSize="19sp"
+                app:layout_constraintEnd_toStartOf="@+id/lowTemperature"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="@+id/conditionText"
+                app:layout_constraintTop_toBottomOf="@+id/conditionText"
+                tools:text="H:24" />
+
+            <TextView
+                android:id="@+id/lowTemperature"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/open_sans_3"
+                android:gravity="center_vertical|start"
+                android:textColor="#2C2C2C"
+                android:textSize="19sp"
+                app:layout_constraintEnd_toEndOf="@+id/conditionText"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/highTemperature"
+                app:layout_constraintTop_toBottomOf="@+id/conditionText"
+                tools:text="L:18" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
@@ -153,17 +107,19 @@
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/coordinatorLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="120dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="match_parent">
 
         <include
-            android:id="@+id/bottomSheetLayout"
+            android:id="@+id/bottomSheet"
             layout="@layout/bottom_sheet" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
-
 </FrameLayout>
+
+
+
+
+
+
+
+
+

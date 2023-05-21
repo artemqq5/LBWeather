@@ -72,7 +72,8 @@
     <string name="temperatureFeels">Feeling temperature</string>
     <string name="list_of_location">List of location</string>
     <string name="active_location">active</string>
-    <string name="current">current</string>
+    <string name="current">my locate</string>
+
 
 
 </resources>

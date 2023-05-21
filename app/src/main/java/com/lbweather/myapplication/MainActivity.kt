@@ -1,33 +1,32 @@
 package com.lbweather.myapplication
 
 import android.os.Bundle
-import android.view.View
-import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.lbweather.myapplication.databinding.ActivityMainBinding
-import com.lbweather.myapplication.helper.FromStr.fromStr
-import com.lbweather.myapplication.location.LocationModel
-import com.lbweather.myapplication.network.internetConnection.checkForInternet
-import com.lbweather.myapplication.sharedPreferences.WeatherPref.getShPrefLocation
-import com.lbweather.myapplication.sharedPreferences.WeatherPref.weatherProperty
-import com.lbweather.myapplication.viewmodel.ViewModelLocation
-import com.lbweather.myapplication.viewmodel.ViewModelWeather
-import dagger.hilt.android.AndroidEntryPoint
+import com.lbweather.myapplication.other.helper.FromStr.fromStr
+import com.lbweather.myapplication.presentation.viewmodel.ViewModelLocation
+import com.lbweather.myapplication.presentation.viewmodel.ViewModelWeather
+import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-@AndroidEntryPoint
 class MainActivity : AppCompatActivity(),
     PreferenceFragmentCompat.OnPreferenceStartFragmentCallback {
 
     private lateinit var binding: ActivityMainBinding
 
     private lateinit var navigationController: NavController
-    private val viewModelWeather: ViewModelWeather by viewModels()
-    private val viewModelLocation: ViewModelLocation by viewModels()
+    private val viewModelWeather: ViewModelWeather by viewModel()
+    private val viewModelLocation: ViewModelLocation by viewModel()
+
+    private val excHandler = CoroutineExceptionHandler { _, throwable ->
+        MyApp.logData("Coroutine Exception. MainActivity ($throwable)")
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,8 +40,6 @@ class MainActivity : AppCompatActivity(),
         navigationController =
             (supportFragmentManager.findFragmentById(R.id.nav_fragment_controller) as NavHostFragment).navController
 
-        // initialisation request for get permission location
-        viewModelLocation.initLocationRequest(this)
     }
 
     // logic transition in Preference Fragments
@@ -70,27 +67,11 @@ class MainActivity : AppCompatActivity(),
 
     override fun onResume() {
         super.onResume()
-
-
-        updateDataBackground()
-    }
-
-
-    // update data
-    private fun updateDataBackground() {
-
-        val locationCoordinate = getShPrefLocation()?.locality ?: fromStr(R.string.defaultCity)
-        if (getShPrefLocation()?.locality.isNullOrEmpty()) viewModelLocation.currentLocation.value =
-            (LocationModel("50.450001", "30.523333", fromStr(R.string.defaultCity)))
-
-        if (!this.checkForInternet()) {
-            Toast.makeText(this, fromStr(R.string.internetNotWorking), Toast.LENGTH_SHORT).show()
-        } else {
-            viewModelWeather.doRequestWeather(
-                locationCoordinate, fromStr(R.string.request_lang)
-            )
+        lifecycleScope.launch(excHandler) {
+            val lastCurrentLocationOrDefault = viewModelLocation.getLastCurrentLocation().name
+            MyApp.logData("app is started ($lastCurrentLocationOrDefault)")
+            viewModelWeather.getWeatherData(lastCurrentLocationOrDefault)
         }
     }
-
 
 }
