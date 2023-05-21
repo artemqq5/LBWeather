@@ -1,4 +1,4 @@
-package com.lbweather.myapplication.domain.model
+package com.lbweather.myapplication.domain.model.weather
 
 import android.os.Parcelable
 import com.squareup.moshi.JsonClass

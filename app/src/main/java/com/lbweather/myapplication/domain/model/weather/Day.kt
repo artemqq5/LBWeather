@@ -1,4 +1,4 @@
-package com.lbweather.myapplication.domain.model
+package com.lbweather.myapplication.domain.model.weather
 
 import com.squareup.moshi.JsonClass
 
@@ -17,5 +17,11 @@ data class Day(
     val mintemp_c: Double,
     val mintemp_f: Double,
     val totalprecip_mm: Double,
-    val uv: Double
-)
+    val uv: Double,
+) {
+    val maxTempCParsed: String
+        get() = "H:${maxtemp_c.toInt()}°"
+
+    val minTempCParsed: String
+        get() = "L:${mintemp_c.toInt()}°"
+}

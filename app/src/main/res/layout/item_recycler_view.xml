@@ -2,18 +2,23 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:layout_margin="3dp"
-    app:cardBackgroundColor="@color/white"
-    app:cardCornerRadius="3dp"
-    app:cardElevation="2dp">
+    android:layout_margin="5dp"
+    app:cardBackgroundColor="#1E2571B3"
+    app:cardCornerRadius="50dp"
+    app:cardElevation="0dp">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp">
+        android:orientation="vertical"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
+        android:gravity="center">
 
         <TextView
             android:id="@+id/time"
@@ -21,59 +26,30 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/open_sans_4"
             android:textSize="14sp"
-            app:layout_constraintHorizontal_chainStyle="packed"
-            app:layout_constraintHorizontal_weight="0.2"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="13:00" />
+            tools:text="12 AM" />
+
+
+        <ImageView
+            android:id="@+id/imageWeather"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp"
+            android:src="@drawable/ic_baseline_wb_sunny_24"
+            tools:ignore="ContentDescription" />
 
         <TextView
             android:id="@+id/dataInfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
             android:fontFamily="@font/open_sans_2"
-            android:textColor="@color/b5"
-            android:textSize="22sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintHorizontal_weight="0.2"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/time"
-            tools:text="23 °С" />
-
-        <ImageView
-            android:id="@+id/imageWeather"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:layout_marginStart="40dp"
-            android:layout_marginEnd="10dp"
-            android:src="@drawable/ic_baseline_wb_sunny_24"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/textWeather"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintHorizontal_chainStyle="packed"
-            app:layout_constraintStart_toEndOf="@+id/dataInfo"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="ContentDescription" />
-
-        <TextView
-            android:id="@+id/textWeather"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="5dp"
-            android:fontFamily="@font/raleway_5"
-            android:textColor="@color/b4"
+            android:textColor="#B00F2540"
             android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintHorizontal_weight="0.2"
-            app:layout_constraintStart_toEndOf="@+id/imageWeather"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="Помірний дощ" />
+            tools:text="23°" />
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
 
 
 </androidx.cardview.widget.CardView>

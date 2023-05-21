@@ -10,6 +10,7 @@ object TimeFormat {
     const val YEAR_MONTH_DAY = "yyyy-MM-dd"
     const val HOUR_MINUTE = "HH:mm"
     const val HOUR_MINUTE_AA = "hh:mm aa"
+    const val HOUR_AA = "hh aa"
 
     const val DAYWEEK_DAY_MONTH_YEAR = "EEEE, dd MMMM yyyy"
 
@@ -46,6 +47,14 @@ object TimeFormat {
         }
 
         return returnDate
+    }
+
+    // return true if date bigger then now local date
+    fun compareDate(time: String): Boolean {
+        val dateNow = Calendar.getInstance().time
+        val formatter = SimpleDateFormat(YEAR_MONTH_DAY_HOUR_MINUTE, Locale.getDefault())
+
+        return formatter.parse(time)?.after(dateNow) ?: false
     }
 
 

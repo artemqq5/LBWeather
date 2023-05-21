@@ -1,25 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg"
-    tools:context=".presentation.DisplayWeather">
+    android:layout_gravity="bottom"
+    android:background="#1A000000"
+    tools:context=".presentation.displayFragment.DisplayWeather">
 
-    <androidx.core.widget.NestedScrollView
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipeLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
+            android:layout_height="match_parent">
 
             <TextView
                 android:id="@+id/locationText"
@@ -30,11 +26,14 @@
                 android:layout_marginEnd="10dp"
                 android:fontFamily="@font/raleway_4"
                 android:gravity="center"
-                android:textColor="@color/white"
-                android:textSize="24sp"
+                android:textColor="#2C2C2C"
+                android:textSize="28sp"
+                app:layout_constraintBottom_toTopOf="@+id/locationTemperature"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="packed"
                 tools:text="Montreal" />
 
             <TextView
@@ -44,19 +43,80 @@
                 android:layout_marginTop="5dp"
                 android:fontFamily="@font/open_sans_1"
                 android:gravity="center"
-                android:textColor="@color/white"
+                android:textColor="#2C2C2C"
                 android:textSize="68sp"
+                app:layout_constraintBottom_toTopOf="@+id/conditionText"
                 app:layout_constraintEnd_toEndOf="@+id/locationText"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="@+id/locationText"
                 app:layout_constraintTop_toBottomOf="@+id/locationText"
                 tools:text="19°" />
 
+            <TextView
+                android:id="@+id/conditionText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/raleway_4"
+                android:gravity="center"
+                android:textColor="#6E6E6E"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toTopOf="@+id/highTemperature"
+                app:layout_constraintEnd_toEndOf="@+id/locationTemperature"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="@+id/locationTemperature"
+                app:layout_constraintTop_toBottomOf="@+id/locationTemperature"
+                tools:text="Mostly Clear" />
 
+            <TextView
+                android:id="@+id/highTemperature"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
+                android:fontFamily="@font/open_sans_3"
+                android:gravity="center_vertical|end"
+                android:textColor="#2C2C2C"
+                android:textSize="19sp"
+                app:layout_constraintEnd_toStartOf="@+id/lowTemperature"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="@+id/conditionText"
+                app:layout_constraintTop_toBottomOf="@+id/conditionText"
+                tools:text="H:24" />
+
+            <TextView
+                android:id="@+id/lowTemperature"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/open_sans_3"
+                android:gravity="center_vertical|start"
+                android:textColor="#2C2C2C"
+                android:textSize="19sp"
+                app:layout_constraintEnd_toEndOf="@+id/conditionText"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/highTemperature"
+                app:layout_constraintTop_toBottomOf="@+id/conditionText"
+                tools:text="L:18" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.core.widget.NestedScrollView>
 
-</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/coordinatorLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include
+            android:id="@+id/bottomSheet"
+            layout="@layout/bottom_sheet" />
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</FrameLayout>
+
+
+
 
 
 

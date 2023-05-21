@@ -1,4 +1,4 @@
-package com.lbweather.myapplication.domain.model
+package com.lbweather.myapplication.domain.model.weather
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass

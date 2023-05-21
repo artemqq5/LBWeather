@@ -14,7 +14,7 @@ import com.lbweather.myapplication.other.helper.StateUnit
 import com.lbweather.myapplication.other.helper.StateUnit.isCelsius
 import com.lbweather.myapplication.other.helper.TimeFormat
 import com.lbweather.myapplication.other.helper.TimeFormat.getParsingTime
-import com.lbweather.myapplication.domain.model.Forecastday
+import com.lbweather.myapplication.domain.model.weather.Forecastday
 
 class DaysAdapter(private var dataSet: Array<Forecastday>) : RecyclerView.Adapter<DaysAdapter.ViewHolder>() {
 

@@ -23,7 +23,7 @@ import com.lbweather.myapplication.other.helper.TimeFormat.HOUR_MINUTE
 import com.lbweather.myapplication.other.helper.TimeFormat.HOUR_MINUTE_AA
 import com.lbweather.myapplication.other.helper.TimeFormat.YEAR_MONTH_DAY_HOUR_MINUTE
 import com.lbweather.myapplication.other.helper.TimeFormat.getParsingTime
-import com.lbweather.myapplication.domain.model.Hour
+import com.lbweather.myapplication.domain.model.weather.Hour
 
 class DetailsDataHour : Fragment() {
 

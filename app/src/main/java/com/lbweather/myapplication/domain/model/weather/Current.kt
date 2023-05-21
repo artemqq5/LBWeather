@@ -1,4 +1,4 @@
-package com.lbweather.myapplication.domain.model
+package com.lbweather.myapplication.domain.model.weather
 
 import com.squareup.moshi.JsonClass
 
@@ -15,4 +15,7 @@ data class Current(
     val uv: Double,
     val wind_kph: Double,
     val wind_mph: Double
-)
+) {
+    val tempCParsed: String
+        get() = "${temp_c.toInt()}°"
+}
