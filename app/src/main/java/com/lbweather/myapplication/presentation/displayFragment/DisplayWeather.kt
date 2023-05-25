@@ -82,6 +82,8 @@ class DisplayWeather : Fragment() {
         lifecycleScope.launch(excHandler) {
             viewModelLocation.flowCurrentLocation.collectLatest {
                 it?.let {
+                    viewModelLocation.setLocationData(it)
+
                     if (it.locationField == binding.bottomSheet.locationLayout.cityCountryInfo.text) {
                         binding.bottomSheet.locationLayout.statusUse.visibility = View.VISIBLE
                     }
@@ -146,7 +148,6 @@ class DisplayWeather : Fragment() {
                     // set this location
                     root.setOnClickListener { _ ->
                         statusUse.visibility = View.VISIBLE
-                        viewModelLocation.setLocationData(it.location)
                         viewModelLocation.setCurrentLocationData(it.location)
                     }
                 }

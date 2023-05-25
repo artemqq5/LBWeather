@@ -1,18 +1,21 @@
 package com.lbweather.myapplication.data
 
-import com.lbweather.myapplication.domain.UseCaseCurrentLocation
-import com.lbweather.myapplication.domain.UseCaseDataLocation
-import com.lbweather.myapplication.domain.UseCaseGetData
+import androidx.fragment.app.FragmentActivity
 import com.lbweather.myapplication.domain.model.weather.WeatherModel
 import com.lbweather.myapplication.domain.repository.DefaultRepository
 import com.lbweather.myapplication.data.database.LocationTable
+import com.lbweather.myapplication.domain.*
+import com.lbweather.myapplication.domain.network.ConnectionManager
+import com.lbweather.myapplication.presentation.locationsFragment.SetLocationByGPS
 import kotlinx.coroutines.flow.Flow
 import retrofit2.Response
 
 class DefaultRepositoryImp(
     private val useCaseGetData: UseCaseGetData,
     private val useCaseDataLocation: UseCaseDataLocation,
-    private val useCaseCurrentLocation: UseCaseCurrentLocation
+    private val useCaseCurrentLocation: UseCaseCurrentLocation,
+    private val useCaseInternet: UseCaseInternet,
+    private val useCaseLocationPermission: UseCaseLocationPermission
 ) : DefaultRepository {
 
     override suspend fun getWeather(location: String): Response<WeatherModel> {
@@ -40,5 +43,23 @@ class DefaultRepositoryImp(
         useCaseCurrentLocation.setCurrentLocation(locationTable)
     }
 
+    override fun getConnectionFlow(): Flow<ConnectionManager.StatusInternet> {
+        return useCaseInternet.getConnectionFlow()
+    }
+    override fun isInternetActive(): Boolean {
+        return useCaseInternet.getStatusInternet()
+    }
+
+    override fun FragmentActivity.initPermissionRequestLauncher() {
+        useCaseLocationPermission.apply {
+            initPermissionRequestLauncher()
+        }
+    }
+    override fun checkLocationPermission() {
+        useCaseLocationPermission.checkLocationPermission()
+    }
+    override fun initCallBackSetLocationByGPS(interfaceModel: SetLocationByGPS) {
+        useCaseLocationPermission.initCallBackSetLocationByGPS(interfaceModel)
+    }
 
 }

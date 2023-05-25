@@ -1,7 +1,10 @@
 package com.lbweather.myapplication.domain.repository
 
+import androidx.fragment.app.FragmentActivity
 import com.lbweather.myapplication.domain.model.weather.WeatherModel
 import com.lbweather.myapplication.data.database.LocationTable
+import com.lbweather.myapplication.domain.network.ConnectionManager
+import com.lbweather.myapplication.presentation.locationsFragment.SetLocationByGPS
 import kotlinx.coroutines.flow.Flow
 import retrofit2.Response
 
@@ -17,4 +20,10 @@ interface DefaultRepository {
     suspend fun getLastCurrentLocation(): LocationTable
     suspend fun setCurrentLocation(locationTable: LocationTable)
 
+    fun getConnectionFlow(): Flow<ConnectionManager.StatusInternet>
+    fun isInternetActive(): Boolean
+
+    fun FragmentActivity.initPermissionRequestLauncher()
+    fun checkLocationPermission()
+    fun initCallBackSetLocationByGPS(interfaceModel: SetLocationByGPS)
 }
