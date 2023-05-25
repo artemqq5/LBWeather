@@ -1,10 +1,12 @@
 package com.lbweather.myapplication.presentation.viewmodel
 
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lbweather.myapplication.MyApp.Companion.logData
 import com.lbweather.myapplication.data.database.LocationTable
 import com.lbweather.myapplication.domain.repository.DefaultRepository
+import com.lbweather.myapplication.presentation.locationsFragment.SetLocationByGPS
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -15,7 +17,7 @@ import kotlinx.coroutines.launch
 
 class ViewModelLocation(
     private val repository: DefaultRepository,
-) : ViewModel() {
+) : ViewModel(), SetLocationByGPS {
 
     private val excHandler = CoroutineExceptionHandler { _, throwable ->
         logData("Coroutine Exception. ViewModelLocation ($throwable)")
@@ -47,6 +49,7 @@ class ViewModelLocation(
 
     init {
         getLocationDataList()
+        repository.initCallBackSetLocationByGPS(this)
     }
 
     val flowCurrentLocation: Flow<LocationTable?> =
@@ -62,4 +65,26 @@ class ViewModelLocation(
         }
     }
 
+
+    // LOCATION GPS
+    fun FragmentActivity.initLocationRequestPermission() {
+        repository.apply {
+            initPermissionRequestLauncher()
+        }
+    }
+
+    fun checkLocationPermission() {
+        repository.checkLocationPermission()
+    }
+
+    override fun setGSPLocation(locationName: String?) {
+        locationName?.let {
+            logData("setGSPLocation = $it")
+            viewModelScope.launch(Dispatchers.IO + excHandler) {
+                repository.getWeather(it).body()?.let { weatherModel ->
+                    setCurrentLocationData(weatherModel.location)
+                }
+            }
+        }
+    }
 }

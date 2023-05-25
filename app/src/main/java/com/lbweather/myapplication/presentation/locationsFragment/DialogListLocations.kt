@@ -8,10 +8,11 @@ import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
 import com.lbweather.myapplication.MyApp.Companion.logData
 import com.lbweather.myapplication.R
-import com.lbweather.myapplication.databinding.DialogLocationsBinding
 import com.lbweather.myapplication.data.database.LocationTable
+import com.lbweather.myapplication.databinding.DialogLocationsBinding
 import com.lbweather.myapplication.presentation.viewmodel.ViewModelLocation
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.collectLatest
@@ -114,8 +115,14 @@ class DialogListLocations : DialogFragment(), NavigationInterfaceAdapter {
         }).attachToRecyclerView(binding.recyclerLocation)
 
 
+        binding.currentLocation.setOnClickListener {
+            try {
+                viewModelLocation.checkLocationPermission()
+            } catch (e: Exception) {
+                Snackbar.make(binding.root, "Error to get location", Snackbar.LENGTH_SHORT).show()
+            }
+        }
     }
-
 
     override fun getTheme(): Int {
         return R.style.DialogTheme
