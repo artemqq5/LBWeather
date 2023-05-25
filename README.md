@@ -5,10 +5,10 @@ The application is in the stage of refactoring with large-scale changes.
 
 The functionality is currently available:
 The app now has 2 screens. The first is responsible for displaying the current weather and weather data for the whole day.
-This screen also has a pull-out panel that we can use to search for the location we need. From this panel, by clicking on the locations menu, we go to the second screen, which contains a list of the locations we have added for the entire time, they are always saved until the user deletes them, but we always have one location that cannot be deleted.
+This screen also has a pull-out panel that we can use to search for the location we need. From this panel, by clicking on the locations menu, we go to the second screen, which contains a list of the locations we have added for the entire time, they are always saved until the user deletes them, but we always have one location that cannot be deleted. Ability to add a location based on the user's current location. Internet connection listener
 
 It is planned to add in the near future:
-Go to the third screen with settings for time, speed, distance, etc. units. the fourth screen showing the weather for 3 days (current and 2 next) with detailed information. Ability to add a location based on the user's current location
+Go to the third screen with settings for time, speed, distance, etc. units. the fourth screen showing the weather for 3 days (current and 2 next) with detailed information. 
 
 Main Technologies used in the project:
 - Glide
