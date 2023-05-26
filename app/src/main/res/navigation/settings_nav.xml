@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/settings"
-        android:name="com.lbweather.myapplication.other.fragments.settings_fragments.Settings"
+        android:name="com.lbweather.getweatherfromall.other.fragments.settings_fragments.Settings"
         android:label="@string/fragment_settings"
         tools:layout="@layout/fragment_settings">
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/settingsDataDisplay"
-        android:name="com.lbweather.myapplication.other.fragments.settings_fragments.SettingsDataDisplay"
+        android:name="com.lbweather.getweatherfromall.other.fragments.settings_fragments.SettingsDataDisplay"
         android:label="@string/settingsDataDisplay">
         <action
             android:id="@+id/action_settingsDataDisplay_to_settings"
