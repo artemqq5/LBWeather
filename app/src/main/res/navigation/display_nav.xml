@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/displayWeather"
-        android:name="com.lbweather.myapplication.presentation.displayFragment.DisplayWeather"
+        android:name="com.lbweather.getweatherfromall.presentation.displayFragment.DisplayWeather"
         android:label="@string/fragment_display"
         tools:layout="@layout/fragment_display_weather">
         <action
@@ -22,7 +22,7 @@
     <include app:graph="@navigation/settings_nav" />
     <dialog
         android:id="@+id/dialogListLocations"
-        android:name="com.lbweather.myapplication.presentation.locationsFragment.DialogListLocations"
+        android:name="com.lbweather.getweatherfromall.presentation.locationsFragment.DialogListLocations"
         android:label="dialog_locations"
         tools:layout="@layout/dialog_locations">
         <action
@@ -31,7 +31,7 @@
     </dialog>
     <fragment
         android:id="@+id/loadingFragment"
-        android:name="com.lbweather.myapplication.presentation.loadingFragment.LoadingFragment"
+        android:name="com.lbweather.getweatherfromall.presentation.loadingFragment.LoadingFragment"
         android:label="fragment_loading"
         tools:layout="@layout/fragment_loading">
         <action
