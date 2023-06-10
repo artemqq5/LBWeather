@@ -8,10 +8,11 @@ import android.view.ViewGroup
 import androidx.core.view.marginBottom
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.lbweather.getweatherfromall.MyApp
+import com.lbweather.getweatherfromall.MyApp.Companion.logData
 import com.lbweather.getweatherfromall.R
 import com.lbweather.getweatherfromall.databinding.FragmentDisplayWeatherBinding
 import com.lbweather.getweatherfromall.domain.model.weather.Hour
@@ -24,19 +25,22 @@ import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
 
+
 class DisplayWeather : Fragment() {
 
-    lateinit var binding: FragmentDisplayWeatherBinding
+    private lateinit var binding: FragmentDisplayWeatherBinding
 
     private val viewModelWeather: ViewModelWeather by viewModel(ownerProducer = { requireActivity() })
     private val viewModelLocation: ViewModelLocation by viewModel(ownerProducer = { requireActivity() })
+
+    private val minBottomSheetHeightListener = MutableLiveData<Int>()
 
     private val adapterWeather by lazy {
         CustomAdapter(arrayListOf())
     }
 
     private val excHandler = CoroutineExceptionHandler { _, throwable ->
-        MyApp.logData("Coroutine Exception. DisplayWeather ($throwable)")
+        logData("Coroutine Exception. DisplayWeather ($throwable)")
     }
 
     override fun onCreateView(
@@ -53,6 +57,9 @@ class DisplayWeather : Fragment() {
         // bind adapter to recyclerView
         binding.bottomSheet.recyclerView.also {
             it.adapter = adapterWeather
+            it.viewTreeObserver.addOnGlobalLayoutListener {
+                minBottomSheetHeightListener.value = getMinHeightBottomSheet()
+            }
         }
 
         lifecycleScope.launch(excHandler) {
@@ -96,12 +103,15 @@ class DisplayWeather : Fragment() {
 
         // listener for draw elements
         binding.bottomSheet.root.post {
-            BottomSheetBehavior.from(binding.bottomSheet.root).apply {
-                peekHeight = getMinHeightBottomSheet() // calculate min height
-                state = BottomSheetBehavior.STATE_COLLAPSED
-            }
+            minBottomSheetHeightListener.observe(viewLifecycleOwner) {
+                BottomSheetBehavior.from(binding.bottomSheet.root).apply {
+                    peekHeight = it // calculate min height
+                    state = BottomSheetBehavior.STATE_COLLAPSED
+                }
 
-            binding.bottomSheet.root.visibility = View.VISIBLE
+//                logData("myLoggerBottomSheet = $it")
+                binding.bottomSheet.root.visibility = View.VISIBLE
+            }
         }
 
 

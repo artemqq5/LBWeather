@@ -7,17 +7,16 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.lbweather.getweatherfromall.R
 import com.lbweather.getweatherfromall.databinding.ItemRecyclerViewBinding
-import com.lbweather.getweatherfromall.other.helper.GlideLoader.loadImg
 import com.lbweather.getweatherfromall.domain.model.weather.Hour
+import com.lbweather.getweatherfromall.other.helper.GlideLoader.loadImg
 
 class CustomAdapter(private var dataList: ArrayList<Hour>) :
     RecyclerView.Adapter<CustomAdapter.ViewHolder>() {
 
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val binding = ItemRecyclerViewBinding.bind(view)
 
         fun initAll(dataModel: Hour) {
-
             binding.time.text = dataModel.timeAA
 
             binding.imageWeather.loadImg(dataModel.condition.icon)
