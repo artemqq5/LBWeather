@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.core.view.marginBottom
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -20,7 +19,10 @@ import com.lbweather.getweatherfromall.other.helper.TimeFormat.compareDate
 import com.lbweather.getweatherfromall.presentation.viewmodel.ViewModelLocation
 import com.lbweather.getweatherfromall.presentation.viewmodel.ViewModelWeather
 import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
@@ -33,7 +35,9 @@ class DisplayWeather : Fragment() {
     private val viewModelWeather: ViewModelWeather by viewModel(ownerProducer = { requireActivity() })
     private val viewModelLocation: ViewModelLocation by viewModel(ownerProducer = { requireActivity() })
 
-    private val minBottomSheetHeightListener = MutableLiveData<Int>()
+    private val mutableMinBottomSheetHeightListener = MutableSharedFlow<Int>()
+    private val minBottomSheetHeightListener: Flow<Int>
+        get() = mutableMinBottomSheetHeightListener.distinctUntilChanged()
 
     private val adapterWeather by lazy {
         CustomAdapter(arrayListOf())
@@ -58,7 +62,9 @@ class DisplayWeather : Fragment() {
         binding.bottomSheet.recyclerView.also {
             it.adapter = adapterWeather
             it.viewTreeObserver.addOnGlobalLayoutListener {
-                minBottomSheetHeightListener.value = getMinHeightBottomSheet()
+                lifecycleScope.launch {
+                    mutableMinBottomSheetHeightListener.emit(getMinHeightBottomSheet())
+                }
             }
         }
 
@@ -103,14 +109,16 @@ class DisplayWeather : Fragment() {
 
         // listener for draw elements
         binding.bottomSheet.root.post {
-            minBottomSheetHeightListener.observe(viewLifecycleOwner) {
-                BottomSheetBehavior.from(binding.bottomSheet.root).apply {
-                    peekHeight = it // calculate min height
-                    state = BottomSheetBehavior.STATE_COLLAPSED
-                }
+            lifecycleScope.launch {
+                minBottomSheetHeightListener.collectLatest {
+                    BottomSheetBehavior.from(binding.bottomSheet.root).apply {
+                        peekHeight = it // calculate min height
+                        state = BottomSheetBehavior.STATE_COLLAPSED
+                    }
 
-//                logData("myLoggerBottomSheet = $it")
-                binding.bottomSheet.root.visibility = View.VISIBLE
+                    logData("myLoggerBottomSheet = $it")
+                    binding.bottomSheet.root.visibility = View.VISIBLE
+                }
             }
         }
 
