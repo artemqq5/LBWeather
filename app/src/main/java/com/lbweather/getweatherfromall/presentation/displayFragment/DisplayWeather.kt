@@ -175,7 +175,7 @@ class DisplayWeather : Fragment(), NavigationInterfaceAdapter {
                     }
 
                     logData("myLoggerBottomSheet = $it")
-                    delay(1L) // to hide resize peekHeight from default to custom
+                    delay(10L) // to hide resize peekHeight from default to custom
                     binding.bottomSheet.root.visibility = View.VISIBLE
                 }
             }
