@@ -24,4 +24,10 @@ data class Day(
 
     val minTempCParsed: String
         get() = "L:${mintemp_c.toInt()}°"
+
+    val maxTempFParsed: String
+        get() = "H:${maxtemp_f.toInt()}°"
+
+    val minTempFParsed: String
+        get() = "L:${mintemp_f.toInt()}°"
 }

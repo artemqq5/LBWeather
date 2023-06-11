@@ -10,7 +10,7 @@ import androidx.preference.PreferenceFragmentCompat
 import com.google.android.material.snackbar.Snackbar
 import com.lbweather.getweatherfromall.databinding.ActivityMainBinding
 import com.lbweather.getweatherfromall.domain.network.ConnectionManager
-import com.lbweather.getweatherfromall.other.helper.FromStr.fromStr
+import com.lbweather.getweatherfromall.helper.FromStr.fromStr
 import com.lbweather.getweatherfromall.presentation.viewmodel.ViewModelInternet
 import com.lbweather.getweatherfromall.presentation.viewmodel.ViewModelLocation
 import com.lbweather.getweatherfromall.presentation.viewmodel.ViewModelWeather
@@ -19,8 +19,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class MainActivity : AppCompatActivity(),
-    PreferenceFragmentCompat.OnPreferenceStartFragmentCallback {
+class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
@@ -43,9 +42,6 @@ class MainActivity : AppCompatActivity(),
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // assign a context
-        main_context = this
-
         // set navigation fragmentContainer
         navigationController =
             (supportFragmentManager.findFragmentById(R.id.nav_fragment_controller) as NavHostFragment).navController
@@ -55,29 +51,6 @@ class MainActivity : AppCompatActivity(),
         }
 
     }
-
-    // logic transition in Preference Fragments
-    override fun onPreferenceStartFragment(
-        caller: PreferenceFragmentCompat, pref: Preference
-    ): Boolean {
-
-        return when (pref.key) {
-
-            fromStr(R.string.dataToDisplayPreference) -> {
-                navigationController.navigate(R.id.action_settings_to_settingsDataDisplay)
-                true
-            }
-
-            else -> false
-        }
-
-    }
-
-
-    companion object {
-        lateinit var main_context: MainActivity
-    }
-
 
     override fun onResume() {
         super.onResume()

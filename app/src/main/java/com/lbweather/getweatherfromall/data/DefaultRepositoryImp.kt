@@ -4,6 +4,7 @@ import androidx.fragment.app.FragmentActivity
 import com.lbweather.getweatherfromall.domain.model.weather.WeatherModel
 import com.lbweather.getweatherfromall.domain.repository.DefaultRepository
 import com.lbweather.getweatherfromall.data.database.LocationTable
+import com.lbweather.getweatherfromall.data.datastore.MyStorageSettings
 import com.lbweather.getweatherfromall.domain.*
 import com.lbweather.getweatherfromall.domain.network.ConnectionManager
 import com.lbweather.getweatherfromall.presentation.locationsFragment.SetLocationByGPS
@@ -15,7 +16,8 @@ class DefaultRepositoryImp(
     private val useCaseDataLocation: UseCaseDataLocation,
     private val useCaseCurrentLocation: UseCaseCurrentLocation,
     private val useCaseInternet: UseCaseInternet,
-    private val useCaseLocationPermission: UseCaseLocationPermission
+    private val useCaseLocationPermission: UseCaseLocationPermission,
+    private val useCaseSettings: MyStorageSettings
 ) : DefaultRepository {
 
     override suspend fun getWeather(location: String): Response<WeatherModel> {
@@ -60,6 +62,13 @@ class DefaultRepositoryImp(
     }
     override fun initCallBackSetLocationByGPS(interfaceModel: SetLocationByGPS) {
         useCaseLocationPermission.initCallBackSetLocationByGPS(interfaceModel)
+    }
+
+    override fun getTimeFormat(): String {
+        return useCaseSettings.getTimeFormat()
+    }
+    override fun getTempUnit(): String {
+        return useCaseSettings.getTempUnit()
     }
 
 }

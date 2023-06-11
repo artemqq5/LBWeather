@@ -26,4 +26,7 @@ interface DefaultRepository {
     fun FragmentActivity.initPermissionRequestLauncher()
     fun checkLocationPermission()
     fun initCallBackSetLocationByGPS(interfaceModel: SetLocationByGPS)
+
+    fun getTimeFormat(): String
+    fun getTempUnit(): String
 }

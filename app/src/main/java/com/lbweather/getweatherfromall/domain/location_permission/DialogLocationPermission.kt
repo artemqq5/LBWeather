@@ -7,7 +7,7 @@ import android.provider.Settings
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.lbweather.getweatherfromall.BuildConfig
 import com.lbweather.getweatherfromall.R
-import com.lbweather.getweatherfromall.other.helper.FromStr.fromStr
+import com.lbweather.getweatherfromall.helper.FromStr.fromStr
 
 object DialogLocationPermission {
 

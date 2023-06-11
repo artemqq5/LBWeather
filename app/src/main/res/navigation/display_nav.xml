@@ -11,15 +11,12 @@
         android:label="@string/fragment_display"
         tools:layout="@layout/fragment_display_weather">
         <action
-            android:id="@+id/action_displayWeather_to_settings_nav2"
-            app:destination="@id/settings_nav"
-            app:popUpTo="@navigation/display_nav"
-            app:popUpToInclusive="true" />
-        <action
             android:id="@+id/action_displayWeather_to_dialogListLocations"
             app:destination="@id/dialogListLocations" />
+        <action
+            android:id="@+id/action_displayWeather_to_settings"
+            app:destination="@id/settings" />
     </fragment>
-    <include app:graph="@navigation/settings_nav" />
     <dialog
         android:id="@+id/dialogListLocations"
         android:name="com.lbweather.getweatherfromall.presentation.locationsFragment.DialogListLocations"
@@ -40,5 +37,10 @@
             app:popUpTo="@id/nav_display"
             app:popUpToInclusive="true" />
     </fragment>
+    <fragment
+        android:id="@+id/settings"
+        android:name="com.lbweather.getweatherfromall.presentation.settingsFragment.Settings"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings" />
 
 </navigation>

@@ -2,20 +2,20 @@ package com.lbweather.getweatherfromall.domain
 
 import com.lbweather.getweatherfromall.MyApp.Companion.logData
 import com.lbweather.getweatherfromall.data.database.LocationTable
-import com.lbweather.getweatherfromall.data.datastore.MyStorage
+import com.lbweather.getweatherfromall.data.datastore.MyStorageLocation
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-class UseCaseCurrentLocation(private val myStorage: MyStorage) {
+class UseCaseCurrentLocation(private val myStorageLocation: MyStorageLocation) {
 
     private val moshiConverter: Moshi by lazy {
         Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
     }
 
     fun getCurrentDataLocation(): Flow<LocationTable?> {
-        return myStorage.myCurrentLocation.map {
+        return myStorageLocation.myCurrentLocation.map {
             try {
                 logData("getCurrentDataLocation() $it")
                 moshiConverter.adapter(LocationTable::class.java).fromJson((it))
@@ -37,7 +37,7 @@ class UseCaseCurrentLocation(private val myStorage: MyStorage) {
 
     suspend fun getLastCurrentLocation(): LocationTable {
         return try {
-            val myLastCurrentLocation = myStorage.myLastCurrentLocation()
+            val myLastCurrentLocation = myStorageLocation.myLastCurrentLocation()
             logData("getLastCurrentLocation() $myLastCurrentLocation")
             moshiConverter.adapter(LocationTable::class.java)
                 .fromJson((myLastCurrentLocation))!!
@@ -57,7 +57,7 @@ class UseCaseCurrentLocation(private val myStorage: MyStorage) {
     }
 
     suspend fun setCurrentLocation(locationTable: LocationTable) {
-        myStorage.setCurrentLocation(
+        myStorageLocation.setCurrentLocation(
             moshiConverter.adapter(LocationTable::class.java).toJson(locationTable)
         )
     }

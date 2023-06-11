@@ -54,26 +54,16 @@
     <string name="request_lang">en</string>
     <string name="kph">kph</string>
     <string name="mph">mph</string>
-
-    <!--    Preferences Main -->
-    <string name="displayDataWeather">Display weather data</string>
-    <string name="PressToSetting">Click to setting</string>
-    <string name="unitOfTemperature">Unit of measurement temperature</string>
-    <string name="unitOfSpeed">Unit of measurement speed</string>
-    <string name="languageState">Language</string>
-    <string name="timeFormat">Time format</string>
-
-    <!--    Preferences Display Data-->
-    <string name="displayDataDay">Display information about the day</string>
-    <string name="displayDataHour">Display information hourly</string>
-    <string name="rainChance">Chance of rain</string>
-    <string name="snowChance">Chance of snow</string>
-    <string name="uvIndex">Ultraviolet index</string>
-    <string name="temperatureFeels">Feeling temperature</string>
     <string name="list_of_location">List of location</string>
     <string name="active_location">active</string>
     <string name="current">my locate</string>
     <string name="search_locations">Search locations</string>
+
+    <!--    Preferences Main -->
+    <string name="displayDataWeather">Display weather data</string>
+    <string name="PressToSetting">Click to setting</string>
+    <string name="unitOfTemperature">Temperature</string>
+    <string name="timeFormat">Time format</string>
 
 
 </resources>

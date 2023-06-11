@@ -1,4 +1,4 @@
-package com.lbweather.getweatherfromall.other.helper
+package com.lbweather.getweatherfromall.helper
 
 import java.text.SimpleDateFormat
 import java.util.*
@@ -7,9 +7,6 @@ object TimeFormat {
 
     const val YEAR_MONTH_DAY_HOUR_MINUTE = "yyyy-MM-dd HH:mm"
 
-    const val YEAR_MONTH_DAY = "yyyy-MM-dd"
-    const val HOUR_MINUTE = "HH:mm"
-    const val HOUR_MINUTE_AA = "hh:mm aa"
     const val HOUR_AA = "hh aa"
     const val HOUR = "HH"
 

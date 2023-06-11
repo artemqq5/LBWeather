@@ -16,8 +16,9 @@ import com.lbweather.getweatherfromall.MyApp.Companion.logData
 import com.lbweather.getweatherfromall.R
 import com.lbweather.getweatherfromall.data.database.LocationTable
 import com.lbweather.getweatherfromall.databinding.FragmentDisplayWeatherBinding
+import com.lbweather.getweatherfromall.domain.UseCaseSettings
 import com.lbweather.getweatherfromall.domain.model.weather.Hour
-import com.lbweather.getweatherfromall.other.helper.TimeFormat.compareDate
+import com.lbweather.getweatherfromall.helper.TimeFormat.compareDate
 import com.lbweather.getweatherfromall.presentation.locationsFragment.LocationAdapter
 import com.lbweather.getweatherfromall.presentation.locationsFragment.NavigationInterfaceAdapter
 import com.lbweather.getweatherfromall.presentation.viewmodel.ViewModelLocation
@@ -29,6 +30,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
 
@@ -40,12 +42,14 @@ class DisplayWeather : Fragment(), NavigationInterfaceAdapter {
     private val viewModelWeather: ViewModelWeather by viewModel(ownerProducer = { requireActivity() })
     private val viewModelLocation: ViewModelLocation by viewModel(ownerProducer = { requireActivity() })
 
+    private val useCaseSettings: UseCaseSettings by inject()
+
     private val mutableMinBottomSheetHeightListener = MutableSharedFlow<Int>()
     private val minBottomSheetHeightListener: Flow<Int>
         get() = mutableMinBottomSheetHeightListener.distinctUntilChanged()
 
     private val adapterWeather by lazy {
-        CustomAdapter(arrayListOf())
+        CustomAdapter(arrayListOf(), useCaseSettings)
     }
 
     private val locationAdapter by lazy {
@@ -87,10 +91,18 @@ class DisplayWeather : Fragment(), NavigationInterfaceAdapter {
 
                 // set data to current weather
                 binding.locationText.text = it.location.name
-                binding.locationTemperature.text = it.current.tempCParsed
                 binding.conditionText.text = it.current.condition.text
-                binding.lowTemperature.text = it.forecast.forecastday[0].day.minTempCParsed
-                binding.highTemperature.text = it.forecast.forecastday[0].day.maxTempCParsed
+
+                // set temp in unit that you choice (celsius or fahrenheit)
+                if (useCaseSettings.getTempUnit() == UseCaseSettings.TempUnit.CELSIUS) {
+                    binding.locationTemperature.text = it.current.tempCParsed
+                    binding.lowTemperature.text = it.forecast.forecastday[0].day.minTempCParsed
+                    binding.highTemperature.text = it.forecast.forecastday[0].day.maxTempCParsed
+                } else {
+                    binding.locationTemperature.text = it.current.tempFParsed
+                    binding.lowTemperature.text = it.forecast.forecastday[0].day.minTempFParsed
+                    binding.highTemperature.text = it.forecast.forecastday[0].day.maxTempFParsed
+                }
 
                 // set new data list for hours weather today
                 adapterWeather.setList(it.forecast.forecastday[0].hour.filter { hour ->
@@ -163,7 +175,7 @@ class DisplayWeather : Fragment(), NavigationInterfaceAdapter {
                     }
 
                     logData("myLoggerBottomSheet = $it")
-                    delay(50L)
+                    delay(1L) // to hide resize peekHeight from default to custom
                     binding.bottomSheet.root.visibility = View.VISIBLE
                 }
             }
@@ -197,6 +209,10 @@ class DisplayWeather : Fragment(), NavigationInterfaceAdapter {
         // open fragment with search location
         binding.bottomSheet.addLocation.setOnClickListener {
             findNavController().navigate(R.id.action_displayWeather_to_dialogListLocations)
+        }
+
+        binding.bottomSheet.openSettings.setOnClickListener {
+            findNavController().navigate(R.id.action_displayWeather_to_settings)
         }
 
         // open bottom sheet with saved locations

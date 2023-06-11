@@ -18,4 +18,7 @@ data class Current(
 ) {
     val tempCParsed: String
         get() = "${temp_c.toInt()}°"
+
+    val tempFParsed: String
+        get() = "${temp_f.toInt()}°"
 }

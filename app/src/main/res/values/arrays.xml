@@ -8,16 +8,6 @@
         <item>celsius</item>
         <item>fahrenheit</item>
     </array>
-
-    <array name="list_speed">
-        <item>Kilometer</item>
-        <item>Mile</item>
-    </array>
-    <array name="list_speed_value">
-        <item>kph</item>
-        <item>mph</item>
-    </array>
-
     <array name="list_times">
         <item>24h</item>
         <item>12h</item>
