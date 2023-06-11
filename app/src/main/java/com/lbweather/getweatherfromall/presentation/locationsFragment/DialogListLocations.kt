@@ -4,30 +4,26 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.ItemTouchHelper
-import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.lbweather.getweatherfromall.MyApp.Companion.logData
 import com.lbweather.getweatherfromall.R
-import com.lbweather.getweatherfromall.data.database.LocationTable
 import com.lbweather.getweatherfromall.databinding.DialogLocationsBinding
 import com.lbweather.getweatherfromall.presentation.viewmodel.ViewModelLocation
+import com.lbweather.getweatherfromall.presentation.viewmodel.ViewModelWeather
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class DialogListLocations : DialogFragment(), NavigationInterfaceAdapter {
+class DialogListLocations : DialogFragment() {
 
     private lateinit var binding: DialogLocationsBinding
 
     private val viewModelLocation: ViewModelLocation by viewModel(ownerProducer = { requireActivity() })
-
-    private val locationAdapter by lazy {
-        LocationAdapter(arrayListOf(), this)
-    }
+    private val viewModelWeather: ViewModelWeather by viewModel(ownerProducer = { requireActivity() })
 
     private val excHandler = CoroutineExceptionHandler { _, throwable ->
         logData("Coroutine Exception. DialogListLocations ($throwable)")
@@ -46,74 +42,57 @@ class DialogListLocations : DialogFragment(), NavigationInterfaceAdapter {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.recyclerLocation.adapter = locationAdapter
-
         lifecycleScope.launch(excHandler) {
-            viewModelLocation.flowLocationList.collectLatest {
-                val list = it.map { itemList ->
-                    itemList.apply {
-                        statusActive =
-                            if (this.name == viewModelLocation.getLastCurrentLocation().name) {
-                                View.VISIBLE
-                            } else {
-                                View.INVISIBLE
-                            }
-                    }.also {
-                        logData("${itemList.name} - ${itemList.statusActive}")
+            viewModelLocation.locationFromGPS.collectLatest {
+                binding.locationLayout.apply {
+                    root.visibility = View.VISIBLE
+                    cityCountryInfo.text = it.locationField
+
+                    binding.locationLayout.statusUse.visibility =
+                        if (viewModelLocation.getLastCurrentLocation().name == it.name) View.VISIBLE
+                        else View.INVISIBLE
+
+                    // set this location
+                    root.setOnClickListener { _ ->
+                        statusUse.visibility = View.VISIBLE
+                        viewModelLocation.setCurrentLocationData(it)
                     }
                 }
-
-                locationAdapter.setList(list.reversed())
-            }
-        }
-
-        lifecycleScope.launch(excHandler) {
-            viewModelLocation.flowCurrentLocation.collectLatest {
-                logData("current location is (${it?.name})")
-                it?.let {
-                    val list: List<LocationTable> = locationAdapter.dataSet.map { itemList ->
-                        itemList.apply {
-                            statusActive = if (this.name == it.name) {
-                                View.VISIBLE
-                            } else {
-                                View.INVISIBLE
-                            }
-                        }.also {
-                            logData("${itemList.name} - ${itemList.statusActive}")
-                        }
-                    }
-
-                    locationAdapter.setList(list)
-                }
-
 
             }
         }
 
-        // add swipe listener to delete item
-        ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
-            override fun onMove(
-                recyclerView: RecyclerView,
-                viewHolder: RecyclerView.ViewHolder,
-                target: RecyclerView.ViewHolder,
-            ): Boolean {
-                return false
-            }
+        // observe response search location
+        lifecycleScope.launch(excHandler) {
+            viewModelWeather.flowDataLocation.collectLatest {
+                binding.locationLayout.apply {
+                    root.visibility = View.VISIBLE
+                    cityCountryInfo.text = it.location.locationField
 
-            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                if (locationAdapter.dataSet.size > 1) {
-                    lifecycleScope.launch(excHandler) {
-                        viewModelLocation.deleteLocationData(locationAdapter.dataSet[viewHolder.adapterPosition])
-                        if (viewHolder.adapterPosition == 0) {
-                            viewModelLocation.setCurrentLocationData(locationAdapter.dataSet[1])
-                        } else viewModelLocation.setCurrentLocationData(locationAdapter.dataSet[0])
+                    binding.locationLayout.statusUse.visibility =
+                        if (viewModelLocation.getLastCurrentLocation().name == it.location.name) View.VISIBLE
+                        else View.INVISIBLE
 
+                    // set this location
+                    root.setOnClickListener { _ ->
+                        statusUse.visibility = View.VISIBLE
+                        viewModelLocation.setCurrentLocationData(it.location)
                     }
                 }
             }
+        }
 
-        }).attachToRecyclerView(binding.recyclerLocation)
+        // search location by text input
+        binding.searchButton.setOnClickListener {
+            viewModelWeather.getLocationData(
+                location = binding.locationInputField.editText?.text.toString()
+            )
+        }
 
+        // enable/disable button search by textField consists
+        binding.locationInputField.editText?.addTextChangedListener {
+            binding.searchButton.isEnabled = !(it.isNullOrEmpty())
+        }
 
         binding.currentLocation.setOnClickListener {
             try {
@@ -128,7 +107,4 @@ class DialogListLocations : DialogFragment(), NavigationInterfaceAdapter {
         return R.style.DialogTheme
     }
 
-    override fun changeCurrentLocation(location: LocationTable) {
-        viewModelLocation.setCurrentLocationData(location)
-    }
 }

@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lbweather.getweatherfromall.MyApp.Companion.logData
 import com.lbweather.getweatherfromall.data.database.LocationTable
+import com.lbweather.getweatherfromall.domain.model.weather.Location
 import com.lbweather.getweatherfromall.domain.repository.DefaultRepository
 import com.lbweather.getweatherfromall.presentation.locationsFragment.SetLocationByGPS
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -26,6 +27,10 @@ class ViewModelLocation(
     private val mutableFlowLocationList = MutableSharedFlow<List<LocationTable>>(replay = 1)
     val flowLocationList: SharedFlow<List<LocationTable>>
         get() = mutableFlowLocationList.asSharedFlow()
+
+    private val mutableLocationFromGPS = MutableSharedFlow<Location>()
+    val locationFromGPS: SharedFlow<Location>
+        get() = mutableLocationFromGPS.asSharedFlow()
 
     private fun getLocationDataList() {
         viewModelScope.launch(Dispatchers.IO + excHandler) {
@@ -82,7 +87,7 @@ class ViewModelLocation(
             logData("setGSPLocation = $it")
             viewModelScope.launch(Dispatchers.IO + excHandler) {
                 repository.getWeather(it).body()?.let { weatherModel ->
-                    setCurrentLocationData(weatherModel.location)
+                    mutableLocationFromGPS.emit(weatherModel.location)
                 }
             }
         }

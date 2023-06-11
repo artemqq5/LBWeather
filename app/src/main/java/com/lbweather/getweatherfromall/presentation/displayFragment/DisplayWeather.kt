@@ -6,19 +6,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.marginBottom
-import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.lbweather.getweatherfromall.MyApp.Companion.logData
 import com.lbweather.getweatherfromall.R
+import com.lbweather.getweatherfromall.data.database.LocationTable
 import com.lbweather.getweatherfromall.databinding.FragmentDisplayWeatherBinding
 import com.lbweather.getweatherfromall.domain.model.weather.Hour
 import com.lbweather.getweatherfromall.other.helper.TimeFormat.compareDate
+import com.lbweather.getweatherfromall.presentation.locationsFragment.LocationAdapter
+import com.lbweather.getweatherfromall.presentation.locationsFragment.NavigationInterfaceAdapter
 import com.lbweather.getweatherfromall.presentation.viewmodel.ViewModelLocation
 import com.lbweather.getweatherfromall.presentation.viewmodel.ViewModelWeather
 import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.collectLatest
@@ -28,7 +33,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
 
 
-class DisplayWeather : Fragment() {
+class DisplayWeather : Fragment(), NavigationInterfaceAdapter {
 
     private lateinit var binding: FragmentDisplayWeatherBinding
 
@@ -41,6 +46,10 @@ class DisplayWeather : Fragment() {
 
     private val adapterWeather by lazy {
         CustomAdapter(arrayListOf())
+    }
+
+    private val locationAdapter by lazy {
+        LocationAdapter(arrayListOf(), this)
     }
 
     private val excHandler = CoroutineExceptionHandler { _, throwable ->
@@ -58,6 +67,9 @@ class DisplayWeather : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // bind locations list adapter to recyclerView
+        binding.bottomSheet.recyclerLocation.adapter = locationAdapter
+
         // bind adapter to recyclerView
         binding.bottomSheet.recyclerView.also {
             it.adapter = adapterWeather
@@ -71,7 +83,7 @@ class DisplayWeather : Fragment() {
         lifecycleScope.launch(excHandler) {
             viewModelWeather.flowDataWeather.collectLatest {
                 // disable updating swipe progress bar
-                if (binding.swipeLayout.isRefreshing) binding.swipeLayout.isRefreshing = false
+                binding.swipeLayout.isRefreshing = false
 
                 // set data to current weather
                 binding.locationText.text = it.location.name
@@ -84,11 +96,6 @@ class DisplayWeather : Fragment() {
                 adapterWeather.setList(it.forecast.forecastday[0].hour.filter { hour ->
                     compareDate(hour.time)
                 } as ArrayList<Hour>)
-
-                // reset active status in bottom sheet if new location not the same
-                if (it.location.locationField != binding.bottomSheet.locationLayout.cityCountryInfo.text) {
-                    binding.bottomSheet.locationLayout.statusUse.visibility = View.INVISIBLE
-                }
             }
         }
 
@@ -96,15 +103,54 @@ class DisplayWeather : Fragment() {
             viewModelLocation.flowCurrentLocation.collectLatest {
                 it?.let {
                     viewModelLocation.setLocationData(it)
-
-                    if (it.locationField == binding.bottomSheet.locationLayout.cityCountryInfo.text) {
-                        binding.bottomSheet.locationLayout.statusUse.visibility = View.VISIBLE
-                    }
-
                     viewModelWeather.getWeatherData(it.name)
                 }
             }
         }
+
+        // observe to set location list to adapter
+        lifecycleScope.launch(excHandler) {
+            viewModelLocation.flowLocationList.collectLatest {
+                val list = it.map { itemList ->
+                    itemList.apply {
+                        statusActive =
+                            if (this.name == viewModelLocation.getLastCurrentLocation().name) {
+                                View.VISIBLE
+                            } else {
+                                View.INVISIBLE
+                            }
+                    }.also {
+                        logData("${itemList.name} - ${itemList.statusActive}")
+                    }
+                }
+
+                locationAdapter.setList(list.reversed())
+            }
+        }
+
+        // add swipe listener to delete item
+        ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder,
+            ): Boolean {
+                return false
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                if (locationAdapter.dataSet.size > 1) {
+                    lifecycleScope.launch(excHandler) {
+                        viewModelLocation.deleteLocationData(locationAdapter.dataSet[viewHolder.adapterPosition])
+                        if (viewHolder.adapterPosition == 0) {
+                            viewModelLocation.setCurrentLocationData(locationAdapter.dataSet[1])
+                        } else viewModelLocation.setCurrentLocationData(locationAdapter.dataSet[0])
+
+                    }
+                }
+            }
+
+        }).attachToRecyclerView(binding.bottomSheet.recyclerLocation)
 
 
         // listener for draw elements
@@ -117,6 +163,7 @@ class DisplayWeather : Fragment() {
                     }
 
                     logData("myLoggerBottomSheet = $it")
+                    delay(50L)
                     binding.bottomSheet.root.visibility = View.VISIBLE
                 }
             }
@@ -133,8 +180,8 @@ class DisplayWeather : Fragment() {
                 }
 
                 override fun onSlide(bottomSheet: View, slideOffset: Float) {
-                    binding.bottomSheet.addLocation.alpha = 1 - slideOffset
-                    binding.bottomSheet.addLocation.isEnabled = (1 - slideOffset >= 1)
+                    binding.bottomSheet.menuLocations.alpha = 1 - slideOffset
+                    binding.bottomSheet.menuLocations.isEnabled = (1 - slideOffset >= 1)
                 }
 
             })
@@ -146,49 +193,16 @@ class DisplayWeather : Fragment() {
             }
         }
 
-        // open bottom sheet with button menu
+
+        // open fragment with search location
         binding.bottomSheet.addLocation.setOnClickListener {
+            findNavController().navigate(R.id.action_displayWeather_to_dialogListLocations)
+        }
+
+        // open bottom sheet with saved locations
+        binding.bottomSheet.menuLocations.setOnClickListener {
             BottomSheetBehavior.from(binding.bottomSheet.root).state =
                 BottomSheetBehavior.STATE_EXPANDED
-        }
-
-        // search location by user search
-        lifecycleScope.launch(excHandler) {
-            viewModelWeather.flowDataLocation.collectLatest {
-                binding.bottomSheet.locationLayout.apply {
-                    root.visibility = View.VISIBLE
-                    cityCountryInfo.text = it.location.locationField
-
-                    binding.bottomSheet.locationLayout.statusUse.visibility =
-                        if (viewModelLocation.getLastCurrentLocation().name == it.location.name) View.VISIBLE
-                        else View.INVISIBLE
-
-                    // set this location
-                    root.setOnClickListener { _ ->
-                        statusUse.visibility = View.VISIBLE
-                        viewModelLocation.setCurrentLocationData(it.location)
-                    }
-                }
-
-
-            }
-        }
-
-        // search location by text input
-        binding.bottomSheet.searchButton.setOnClickListener {
-            viewModelWeather.getLocationData(
-                location = binding.bottomSheet.locationInputField.editText?.text.toString()
-            )
-        }
-
-        // enable/disable button search by textField consists
-        binding.bottomSheet.locationInputField.editText?.addTextChangedListener {
-            binding.bottomSheet.searchButton.isEnabled = !(it.isNullOrEmpty())
-        }
-
-        // open fragment with saved locations
-        binding.bottomSheet.menuLocations.setOnClickListener {
-            findNavController().navigate(R.id.action_displayWeather_to_dialogListLocations)
         }
 
     }
@@ -197,5 +211,9 @@ class DisplayWeather : Fragment() {
     private fun getMinHeightBottomSheet(): Int {
         val buttonPanel = binding.bottomSheet.buttonPanel.run { y + height + marginBottom }
         return buttonPanel.toInt()
+    }
+
+    override fun changeCurrentLocation(location: LocationTable) {
+        viewModelLocation.setCurrentLocationData(location)
     }
 }

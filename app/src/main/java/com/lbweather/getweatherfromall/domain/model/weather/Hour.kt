@@ -2,7 +2,7 @@ package com.lbweather.getweatherfromall.domain.model.weather
 
 import android.os.Parcelable
 import com.lbweather.getweatherfromall.other.helper.TimeFormat
-import com.lbweather.getweatherfromall.other.helper.TimeFormat.getParsingTimeHour
+import com.lbweather.getweatherfromall.other.helper.TimeFormat.getParsingTime
 import com.squareup.moshi.JsonClass
 import kotlinx.parcelize.Parcelize
 
@@ -23,9 +23,9 @@ data class Hour(
     val wind_mph: Double,
 ) : Parcelable {
     val timeAA: String
-        get() = time.getParsingTimeHour(
+        get() = time.getParsingTime(
             TimeFormat.YEAR_MONTH_DAY_HOUR_MINUTE,
-            TimeFormat.HOUR_AA
+            TimeFormat.HOUR
         )
 
     val tempCParsed: String

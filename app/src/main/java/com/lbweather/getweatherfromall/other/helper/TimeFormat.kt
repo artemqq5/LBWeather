@@ -11,28 +11,12 @@ object TimeFormat {
     const val HOUR_MINUTE = "HH:mm"
     const val HOUR_MINUTE_AA = "hh:mm aa"
     const val HOUR_AA = "hh aa"
+    const val HOUR = "HH"
 
     const val DAYWEEK_DAY_MONTH_YEAR = "EEEE, dd MMMM yyyy"
 
 
     fun String.getParsingTime(patternFrom: String, patternTo: String): String {
-
-        val returnDate: String
-
-        val writeFormat = SimpleDateFormat(patternFrom, Locale.US)
-        val readFormat = SimpleDateFormat(patternTo, Locale.getDefault())
-
-        // return data with no parse if format has exception
-        returnDate = try {
-            readFormat.format(writeFormat.parse(this)!!)
-        } catch (e: Exception) {
-            this
-        }
-
-        return returnDate
-    }
-
-    fun String.getParsingTimeHour(patternFrom: String, patternTo: String): String {
 
         val returnDate: String
 

@@ -6,8 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.lbweather.getweatherfromall.R
-import com.lbweather.getweatherfromall.databinding.ItemLocationBinding
 import com.lbweather.getweatherfromall.data.database.LocationTable
+import com.lbweather.getweatherfromall.databinding.ItemLocationBinding
 import com.lbweather.getweatherfromall.presentation.locationsFragment.LocationAdapter.ViewHolder
 
 class LocationAdapter(
@@ -21,6 +21,12 @@ class LocationAdapter(
 
         @SuppressLint("SetTextI18n")
         fun bindItem(locationItem: LocationTable) {
+
+            // set bottom margin to last item of recyclerView
+            if (adapterPosition + 1 == dataSet.size) {
+                val layoutParams = itemView.layoutParams as ViewGroup.MarginLayoutParams
+                layoutParams.bottomMargin = 20
+            }
 
             // set data to item
             binding.cityCountryInfo.text = locationItem.locationField
