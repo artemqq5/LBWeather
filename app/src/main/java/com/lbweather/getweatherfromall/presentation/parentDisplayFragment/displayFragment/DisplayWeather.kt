@@ -206,17 +206,15 @@ class DisplayWeather : Fragment(), NavigationInterfaceAdapter {
             }
         }
 
-        val navHostFragment = requireActivity().supportFragmentManager
-            .findFragmentById(R.id.nav_fragment_controller) as NavHostFragment
-        val navController = navHostFragment.navController
+
 
         // open fragment with search location
         binding.bottomSheet.addLocation.setOnClickListener {
-            navController.navigate(R.id.action_displayWeather_to_dialogListLocations)
+            findNavController().navigate(R.id.action_displayWeather_to_dialogListLocations)
         }
 
         binding.bottomSheet.openSettings.setOnClickListener {
-            navController.navigate(R.id.action_displayWeather_to_settings)
+            findNavController().navigate(R.id.action_displayWeather_to_settings)
         }
 
         // open bottom sheet with saved locations

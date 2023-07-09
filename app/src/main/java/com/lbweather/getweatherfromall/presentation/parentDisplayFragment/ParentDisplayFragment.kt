@@ -5,8 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.NavHostFragment
-import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 import com.lbweather.getweatherfromall.R
 import com.lbweather.getweatherfromall.databinding.FragmentParentDisplayBinding
 
@@ -28,29 +27,19 @@ class ParentDisplayFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val navHostFragment =
-            childFragmentManager.findFragmentById(R.id.sub_nav_fragment_controller) as NavHostFragment
-        val navController = navHostFragment.navController
+        // Disable swipe
+        binding.viewPager.isUserInputEnabled = false
 
-        binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-            override fun onTabSelected(tab: TabLayout.Tab?) {
-                when (tab) {
-                    binding.tabLayout.getTabAt(0) -> {
-                        navController.navigate(R.id.action_futureForecastFragment_to_displayWeather2)
-                    }
-                    binding.tabLayout.getTabAt(1) -> {
-                        navController.navigate(R.id.action_displayWeather2_to_futureForecastFragment)
-                    }
-                }
+        // Set the adapter
+        binding.viewPager.adapter = CustomPagerAdapter(this)
+
+        // Connect the TabLayout and the ViewPager2
+        TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
+            when(position) {
+                0 -> {tab.text = resources.getString(R.string.current_weather)}
+                1 -> {tab.text = resources.getString(R.string.for_3_days)}
             }
-
-            override fun onTabUnselected(tab: TabLayout.Tab?) {
-            }
-
-            override fun onTabReselected(tab: TabLayout.Tab?) {
-            }
-
-        })
+        }.attach()
 
     }
 }
