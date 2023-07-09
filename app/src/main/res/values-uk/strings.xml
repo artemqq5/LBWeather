@@ -58,7 +58,8 @@
     <string name="PressToSetting">Нажміть для налаштування</string>
     <string name="unitOfTemperature">Температура</string>
     <string name="timeFormat">Формат часу</string>
-
+    <string name="for_3_days">На 3 дні</string>
+    <string name="current_weather">Зараз</string>
 
 
 </resources>

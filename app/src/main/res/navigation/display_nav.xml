@@ -6,10 +6,10 @@
     app:startDestination="@id/loadingFragment">
 
     <fragment
-        android:id="@+id/displayWeather"
-        android:name="com.lbweather.getweatherfromall.presentation.displayFragment.DisplayWeather"
-        android:label="@string/fragment_display"
-        tools:layout="@layout/fragment_display_weather">
+        android:id="@+id/parentDisplayFragment"
+        android:name="com.lbweather.getweatherfromall.presentation.parentDisplayFragment.ParentDisplayFragment"
+        android:label="fragment_parent_display"
+        tools:layout="@layout/fragment_parent_display" >
         <action
             android:id="@+id/action_displayWeather_to_dialogListLocations"
             app:destination="@id/dialogListLocations" />
@@ -23,8 +23,8 @@
         android:label="dialog_locations"
         tools:layout="@layout/dialog_locations">
         <action
-            android:id="@+id/action_dialogListLocations_to_displayWeather"
-            app:destination="@id/displayWeather" />
+            android:id="@+id/action_dialogListLocations_to_parentDisplayFragment"
+            app:destination="@id/parentDisplayFragment" />
     </dialog>
     <fragment
         android:id="@+id/loadingFragment"
@@ -32,8 +32,8 @@
         android:label="fragment_loading"
         tools:layout="@layout/fragment_loading">
         <action
-            android:id="@+id/action_loadingFragment_to_displayWeather"
-            app:destination="@id/displayWeather"
+            android:id="@+id/action_loadingFragment_to_parentDisplayFragment"
+            app:destination="@id/parentDisplayFragment"
             app:popUpTo="@id/nav_display"
             app:popUpToInclusive="true" />
     </fragment>
@@ -42,5 +42,6 @@
         android:name="com.lbweather.getweatherfromall.presentation.settingsFragment.Settings"
         android:label="fragment_settings"
         tools:layout="@layout/fragment_settings" />
+
 
 </navigation>

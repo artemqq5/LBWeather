@@ -1,4 +1,4 @@
-package com.lbweather.getweatherfromall.presentation.displayFragment
+package com.lbweather.getweatherfromall.presentation.parentDisplayFragment.displayFragment
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater

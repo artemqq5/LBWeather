@@ -41,7 +41,7 @@ class LoadingFragment : Fragment() {
         lifecycleScope.launch(excHandler) {
             viewModelWeather.flowDataWeather.collectLatest {
                 delay(1000L) // optional to show animation more time
-                findNavController().navigate(R.id.action_loadingFragment_to_displayWeather)
+                findNavController().navigate(R.id.action_loadingFragment_to_parentDisplayFragment)
             }
         }
 

@@ -1,4 +1,4 @@
-package com.lbweather.getweatherfromall.presentation.displayFragment
+package com.lbweather.getweatherfromall.presentation.parentDisplayFragment.displayFragment
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.core.view.marginBottom
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
@@ -205,14 +206,17 @@ class DisplayWeather : Fragment(), NavigationInterfaceAdapter {
             }
         }
 
+        val navHostFragment = requireActivity().supportFragmentManager
+            .findFragmentById(R.id.nav_fragment_controller) as NavHostFragment
+        val navController = navHostFragment.navController
 
         // open fragment with search location
         binding.bottomSheet.addLocation.setOnClickListener {
-            findNavController().navigate(R.id.action_displayWeather_to_dialogListLocations)
+            navController.navigate(R.id.action_displayWeather_to_dialogListLocations)
         }
 
         binding.bottomSheet.openSettings.setOnClickListener {
-            findNavController().navigate(R.id.action_displayWeather_to_settings)
+            navController.navigate(R.id.action_displayWeather_to_settings)
         }
 
         // open bottom sheet with saved locations
