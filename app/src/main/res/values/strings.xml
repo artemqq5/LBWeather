@@ -41,6 +41,7 @@
 
     <!--    MainActivity-->
     <string name="fragment_display">Weather</string>
+    <string name="today">Today</string>
     <string name="tomorrow">Tomorrow</string>
     <string name="day_after_tomorrow">Day after tomorrow</string>
     <string name="dataToDisplayPreference" translatable="false">dataToDisplayPreference</string>

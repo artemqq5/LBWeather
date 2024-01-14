@@ -38,6 +38,7 @@
 
     <!--    MainActivity-->
     <string name="fragment_display">Погода</string>
+    <string name="today">Сьогодні</string>
     <string name="tomorrow">Завтра</string>
     <string name="day_after_tomorrow">Післязавтра</string>
 
