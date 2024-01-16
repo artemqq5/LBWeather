@@ -8,6 +8,7 @@
     android:background="@color/white"
     android:visibility="invisible"
     android:orientation="vertical"
+    tools:visibility="visible"
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
     <View

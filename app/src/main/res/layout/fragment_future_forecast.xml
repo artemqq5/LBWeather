@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/swipeLayoutFuture"
-    tools:context=".presentation.parentDisplayFragment.futureForecastFragment.FutureForecastFragment">
+    tools:context=".presentation.fragments.FutureForecastFragment">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"

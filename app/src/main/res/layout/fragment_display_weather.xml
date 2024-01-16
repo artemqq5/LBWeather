@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:layout_gravity="bottom"
     android:background="#1A000000"
-    tools:context=".presentation.parentDisplayFragment.displayFragment.DisplayWeather">
+    tools:context=".presentation.fragments.DisplayWeather">
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipeLayout"

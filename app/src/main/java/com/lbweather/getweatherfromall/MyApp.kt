@@ -2,7 +2,10 @@ package com.lbweather.getweatherfromall
 
 import android.app.Application
 import android.util.Log
-import androidx.appcompat.app.AppCompatDelegate
+import com.google.android.gms.ads.MobileAds
+import com.lbweather.getweatherfromall.data.dataDI
+import com.lbweather.getweatherfromall.domain.domainDI
+import com.lbweather.getweatherfromall.presentation.presentationDI
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -13,12 +16,12 @@ class MyApp : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        MobileAds.initialize(this) {}
 
         startKoin {
             androidLogger(Level.INFO)
             androidContext(this@MyApp)
-            modules(listOf(dataModule))
+            modules(listOf(domainDI, dataDI, presentationDI))
         }
 
     }

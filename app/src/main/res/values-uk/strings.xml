@@ -62,6 +62,8 @@
     <string name="for_3_days">На 3 дні</string>
     <string name="current_weather">Зараз</string>
 
+    <string name="no_internet">Немає підключення до Інтернету</string>
+
 
 </resources>
 

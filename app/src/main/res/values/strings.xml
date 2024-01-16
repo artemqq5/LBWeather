@@ -68,5 +68,7 @@
     <string name="for_3_days">For 3 days</string>
     <string name="current_weather">Current</string>
 
+    <string name="no_internet">No Internet connection</string>
+
 
 </resources>
