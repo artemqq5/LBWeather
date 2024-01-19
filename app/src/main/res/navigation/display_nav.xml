@@ -6,39 +6,45 @@
     app:startDestination="@id/loadingFragment">
 
     <fragment
-        android:id="@+id/displayWeather"
-        android:name="com.lbweather.getweatherfromall.presentation.displayFragment.DisplayWeather"
-        android:label="@string/fragment_display"
-        tools:layout="@layout/fragment_display_weather">
-        <action
-            android:id="@+id/action_displayWeather_to_settings_nav2"
-            app:destination="@id/settings_nav"
-            app:popUpTo="@navigation/display_nav"
-            app:popUpToInclusive="true" />
+        android:id="@+id/parentDisplayFragment"
+        android:name="com.lbweather.getweatherfromall.presentation.fragments.ParentDisplayFragment"
+        android:label="fragment_parent_display"
+        tools:layout="@layout/fragment_parent_display" >
         <action
             android:id="@+id/action_displayWeather_to_dialogListLocations"
             app:destination="@id/dialogListLocations" />
+        <action
+            android:id="@+id/action_parentDisplayFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
     </fragment>
-    <include app:graph="@navigation/settings_nav" />
     <dialog
         android:id="@+id/dialogListLocations"
-        android:name="com.lbweather.getweatherfromall.presentation.locationsFragment.DialogListLocations"
+        android:name="com.lbweather.getweatherfromall.presentation.fragments.DialogListLocations"
         android:label="dialog_locations"
         tools:layout="@layout/dialog_locations">
         <action
-            android:id="@+id/action_dialogListLocations_to_displayWeather"
-            app:destination="@id/displayWeather" />
+            android:id="@+id/action_dialogListLocations_to_parentDisplayFragment"
+            app:destination="@id/parentDisplayFragment" />
     </dialog>
     <fragment
         android:id="@+id/loadingFragment"
-        android:name="com.lbweather.getweatherfromall.presentation.loadingFragment.LoadingFragment"
+        android:name="com.lbweather.getweatherfromall.presentation.fragments.LoadingFragment"
         android:label="fragment_loading"
         tools:layout="@layout/fragment_loading">
         <action
-            android:id="@+id/action_loadingFragment_to_displayWeather"
-            app:destination="@id/displayWeather"
+            android:id="@+id/action_loadingFragment_to_parentDisplayFragment"
+            app:destination="@id/parentDisplayFragment"
             app:popUpTo="@id/nav_display"
             app:popUpToInclusive="true" />
     </fragment>
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.lbweather.getweatherfromall.presentation.fragments.SettingsFragment"
+        android:label="SettingsFragment" >
+        <action
+            android:id="@+id/action_settingsFragment_to_parentDisplayFragment"
+            app:destination="@id/parentDisplayFragment" />
+    </fragment>
+
 
 </navigation>

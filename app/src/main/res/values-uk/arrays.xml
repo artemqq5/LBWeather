@@ -5,12 +5,8 @@
         <item>Фаренгейт</item>
     </array>
 
-    <array name="list_speed">
-        <item>Кілометр</item>
-        <item>Миля</item>
-    </array>
-
     <array name="list_times">
+        <item>default</item>
         <item>24г</item>
         <item>12г</item>
     </array>

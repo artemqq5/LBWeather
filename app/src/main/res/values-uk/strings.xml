@@ -38,6 +38,7 @@
 
     <!--    MainActivity-->
     <string name="fragment_display">Погода</string>
+    <string name="today">Сьогодні</string>
     <string name="tomorrow">Завтра</string>
     <string name="day_after_tomorrow">Післязавтра</string>
 
@@ -48,26 +49,23 @@
     <string name="request_lang">uk</string>
     <string name="kph">км</string>
     <string name="mph">миль</string>
+    <string name="list_of_location">Список локацій</string>
+    <string name="active_location">активний</string>
+    <string name="current">поточна</string>
+    <string name="search_locations">Пошук локацій</string>
 
     <!--    Preferences Main -->
     <string name="displayDataWeather">Відображення даних про погоду</string>
     <string name="PressToSetting">Нажміть для налаштування</string>
-    <string name="unitOfTemperature">Одиниця вимірювання температури</string>
-    <string name="unitOfSpeed">Одиниця вимірювання швидкості</string>
-    <string name="languageState">Мова</string>
+    <string name="unitOfTemperature">Температура</string>
     <string name="timeFormat">Формат часу</string>
+    <string name="for_3_days">На 3 дні</string>
+    <string name="current_weather">Зараз</string>
 
+    <string name="no_internet">Немає підключення до Інтернету</string>
 
-    <!--    Preferences Display Data-->
-    <string name="displayDataDay">Відображення інформації про день</string>
-    <string name="displayDataHour">Відображення інформації погодинно</string>
-    <string name="rainChance">Ймовірність дощу</string>
-    <string name="snowChance">Ймовірність снігу</string>
-    <string name="uvIndex">Ультрафіолетовий індекс</string>
-    <string name="temperatureFeels">Температура по відчуттям</string>
-    <string name="list_of_location">Список локацій</string>
-    <string name="active_location">активний</string>
-    <string name="current">поточна</string>
+    <string name="no_location_permission">Помилка в отриманні локації</string>
+
 
 </resources>
 

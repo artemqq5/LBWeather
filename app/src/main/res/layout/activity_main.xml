@@ -10,7 +10,7 @@
     android:visibility="visible"
     app:defaultNavHost="true"
     app:navGraph="@navigation/display_nav"
-    tools:context=".MainActivity" />
+    tools:context=".presentation.MainActivity" />
 
 
 
