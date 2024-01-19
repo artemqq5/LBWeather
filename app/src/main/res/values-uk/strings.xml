@@ -3,6 +3,8 @@
     <!--    CustomAdapter-->
     <string name="timeNow">Зараз</string>
 
+    <string name="ukraine_country">Україна</string>
+
     <!--    Dialogs-->
     <string name="location">Локація</string>
     <string name="youFrom">Ти з</string>

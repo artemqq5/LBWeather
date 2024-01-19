@@ -2,6 +2,9 @@
     <string name="app_name" translatable="false">LBWeather</string>
     <string name="ads_client_app" translatable="false">----</string> <!-- todo exchange -->
 
+    <string name="ukraine_country">Ukraine</string>
+    <string name="location_field_tt" translatable="false">%s, %s</string>
+
     <!--    CustomAdapter-->
     <string name="timeNow">Now</string>
     <string name="celsius" translatable="false">°С</string>
