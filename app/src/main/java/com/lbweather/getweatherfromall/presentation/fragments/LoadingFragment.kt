@@ -35,7 +35,7 @@ class LoadingFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         lifecycleScope.launch(excHandler) {
-            delay(500L)
+            delay(300L)
             findNavController().navigate(R.id.action_loadingFragment_to_parentDisplayFragment)
         }
 

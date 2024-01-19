@@ -7,11 +7,11 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class HourModel(
     @Json(name = "condition")
-    val conditionModel: ConditionModel?,
+    val conditionModel: ConditionModel,
     @Json(name = "temp_c")
-    val tempC: Double?,
+    val tempC: Double,
     @Json(name = "temp_f")
-    val tempF: Double?,
-    @Json(name = "time")
-    val time: String?
+    val tempF: Double,
+    @Json(name = "time_epoch")
+    val time: Long
 )

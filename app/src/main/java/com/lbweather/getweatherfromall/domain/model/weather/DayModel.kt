@@ -7,25 +7,25 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class DayModel(
     @Json(name = "condition")
-    val conditionModel: ConditionModel?,
+    val conditionModel: ConditionModel,
     @Json(name = "maxtemp_c")
-    val maxtempC: Double?,
+    val maxtempC: Double,
     @Json(name = "maxtemp_f")
-    val maxtempF: Double?,
+    val maxtempF: Double,
     @Json(name = "mintemp_c")
-    val mintempC: Double?,
+    val mintempC: Double,
     @Json(name = "mintemp_f")
-    val mintempF: Double?
+    val mintempF: Double
 ) {
     val maxTempCParsed: String
-        get() = "H:${maxtempC?.toInt()}°"
+        get() = "H:${maxtempC.toInt()}°"
 
     val minTempCParsed: String
-        get() = "L:${mintempC?.toInt()}°"
+        get() = "L:${mintempC.toInt()}°"
 
     val maxTempFParsed: String
-        get() = "H:${maxtempF?.toInt()}°"
+        get() = "H:${maxtempF.toInt()}°"
 
     val minTempFParsed: String
-        get() = "L:${mintempF?.toInt()}°"
+        get() = "L:${mintempF.toInt()}°"
 }

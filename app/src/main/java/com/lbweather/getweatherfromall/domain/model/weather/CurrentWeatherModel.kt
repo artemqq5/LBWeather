@@ -7,13 +7,13 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class CurrentWeatherModel(
     @Json(name = "condition")
-    val conditionModel: ConditionModel?,
+    val conditionModel: ConditionModel,
     @Json(name = "last_updated")
-    val lastUpdated: String?,
+    val lastUpdated: String,
     @Json(name = "last_updated_epoch")
-    val lastUpdatedEpoch: Int?,
+    val lastUpdatedEpoch: Int,
     @Json(name = "temp_c")
-    val tempC: Double?,
+    val tempC: Double,
     @Json(name = "temp_f")
-    val tempF: Double?
+    val tempF: Double
 )

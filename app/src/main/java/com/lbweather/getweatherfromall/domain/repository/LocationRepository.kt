@@ -1,15 +1,17 @@
 package com.lbweather.getweatherfromall.domain.repository
 
-import com.lbweather.getweatherfromall.data.database.LocationTable
+import com.lbweather.getweatherfromall.domain.model.LocationUserModel
+import kotlinx.coroutines.flow.Flow
 
 interface LocationRepository {
 
-    suspend fun getLocationList(): List<LocationTable>
-    suspend fun setNewLocation(locationTable: LocationTable)
-    suspend fun deleteLocation(locationTable: LocationTable)
+    suspend fun searchLocation(location: String, lang: String): LocationUserModel?
 
-    suspend fun getCurrentLocation(): LocationTable
-    suspend fun getLastCurrentLocation(): LocationTable
-    suspend fun setCurrentLocation(locationTable: LocationTable)
+    fun getAllLocation(): Flow<List<LocationUserModel>>
+    suspend fun addNewLocation(locationUserModel: LocationUserModel)
+    suspend fun deleteLocation(locationUserModel: LocationUserModel)
+
+    suspend fun getActiveLocation(): LocationUserModel
+    suspend fun setActiveLocation(locationUserModel: LocationUserModel)
 
 }

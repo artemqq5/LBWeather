@@ -1,0 +1,28 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory
+        app:iconSpaceReserved="false"
+        app:title="@string/fragment_settings">
+
+        <ListPreference
+            android:defaultValue="celsius"
+            android:entryValues="@array/list_temperature_value"
+            app:entries="@array/list_temperature"
+            app:iconSpaceReserved="false"
+            app:key="unit-temperature"
+            app:title="@string/unitOfTemperature"
+            app:useSimpleSummaryProvider="true" />
+
+        <ListPreference
+            android:defaultValue="europe"
+            android:entryValues="@array/list_times_value"
+            app:entries="@array/list_times"
+            app:iconSpaceReserved="false"
+            app:key="time-format"
+            app:title="@string/timeFormat"
+            app:useSimpleSummaryProvider="true" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

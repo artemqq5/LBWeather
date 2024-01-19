@@ -14,14 +14,14 @@ import kotlinx.coroutines.launch
 class WeatherViewModel(private val weatherRepository: WeatherRepository) : ViewModel() {
 
     companion object {
-        private const val DEFAULT_LOCATION = "London"
+        const val DEFAULT_LOCATION = "London"
     }
 
     private val excHandler = CoroutineExceptionHandler { _, throwable ->
         MyApp.logData("Coroutine Exception. WeatherViewModel ($throwable)")
     }
 
-    private val _weatherDataFlow = MutableSharedFlow<WeatherDataModel>()
+    private val _weatherDataFlow = MutableSharedFlow<WeatherDataModel>(replay = 1)
     val weatherDataFlow = _weatherDataFlow.asSharedFlow()
 
     fun updateWeather(location: String = DEFAULT_LOCATION, lang: String) {

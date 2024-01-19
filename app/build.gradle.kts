@@ -3,10 +3,11 @@ import java.util.Properties
 plugins {
     id("com.android.application")
     id("kotlin-android")
-    id("kotlin-kapt")
-    id("androidx.navigation.safeargs.kotlin")
     id("kotlin-parcelize")
     id("com.google.devtools.ksp")
+    id("com.google.gms.google-services")
+    id("com.google.firebase.crashlytics")
+    id("com.google.firebase.firebase-perf")
 }
 
 android {
@@ -30,7 +31,28 @@ android {
                 properties.load(it)
             }
         }
+
         buildConfigField("String", "API_KEY", "\"${properties.getProperty("API_KEY")}\"")
+        buildConfigField(
+            "String",
+            "ID_ON_START_ACTIVITY_INTERSTITIAL",
+            "\"${properties.getProperty("ID_ON_START_ACTIVITY_INTERSTITIAL")}\""
+        )
+        buildConfigField(
+            "String",
+            "ID_BOTTOM_SHEET_BANNER",
+            "\"${properties.getProperty("ID_BOTTOM_SHEET_BANNER")}\""
+        )
+        buildConfigField(
+            "String",
+            "ID_FUTURE_WEATHER_BANNER",
+            "\"${properties.getProperty("ID_FUTURE_WEATHER_BANNER")}\""
+        )
+        buildConfigField(
+            "String",
+            "ID_LOCATION_SEARCH_BANNER",
+            "\"${properties.getProperty("ID_LOCATION_SEARCH_BANNER")}\""
+        )
     }
 
     buildTypes {
@@ -66,11 +88,17 @@ android {
 }
 
 dependencies {
+    implementation(platform("com.google.firebase:firebase-bom:32.7.0"))
+    implementation("com.google.firebase:firebase-crashlytics")
+    implementation("com.google.firebase:firebase-analytics")
+    implementation("com.google.firebase:firebase-perf")
+
     implementation("com.google.android.gms:play-services-location:21.0.1")
     implementation("androidx.datastore:datastore-preferences:1.0.0")
 
     implementation("androidx.room:room-runtime:2.6.1")
-    annotationProcessor("androidx.room:room-compiler:2.6.1")
+    implementation("androidx.room:room-ktx:2.6.1")
+    implementation("androidx.preference:preference-ktx:1.2.1")
     ksp("androidx.room:room-compiler:2.6.1")
 
     implementation("io.insert-koin:koin-android:3.3.2")
@@ -92,6 +120,5 @@ dependencies {
     implementation("com.google.android.gms:play-services-ads:22.6.0")
 
     implementation("androidx.drawerlayout:drawerlayout:1.2.0")
-    implementation("androidx.preference:preference-ktx:1.2.1")
     implementation("com.github.bumptech.glide:glide:4.16.0")
 }

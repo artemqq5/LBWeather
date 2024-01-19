@@ -64,6 +64,8 @@
 
     <string name="no_internet">Немає підключення до Інтернету</string>
 
+    <string name="no_location_permission">Помилка в отриманні локації</string>
+
 
 </resources>
 

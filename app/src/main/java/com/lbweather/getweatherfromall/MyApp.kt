@@ -28,7 +28,8 @@ class MyApp : Application() {
 
     companion object {
         fun logData(any: Any?) {
-            Log.i("myLogger", "$any")
+//            Log.i("myLogger", "$any")
         }
     }
+
 }

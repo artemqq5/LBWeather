@@ -9,10 +9,12 @@
         <item>fahrenheit</item>
     </array>
     <array name="list_times">
+        <item>default</item>
         <item>24h</item>
         <item>12h</item>
     </array>
     <array name="list_times_value">
+        <item>default</item>
         <item>europe</item>
         <item>america</item>
     </array>

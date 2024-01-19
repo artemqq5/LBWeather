@@ -14,8 +14,8 @@
             android:id="@+id/action_displayWeather_to_dialogListLocations"
             app:destination="@id/dialogListLocations" />
         <action
-            android:id="@+id/action_displayWeather_to_settings"
-            app:destination="@id/settings" />
+            android:id="@+id/action_parentDisplayFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
     </fragment>
     <dialog
         android:id="@+id/dialogListLocations"
@@ -38,10 +38,13 @@
             app:popUpToInclusive="true" />
     </fragment>
     <fragment
-        android:id="@+id/settings"
-        android:name="com.lbweather.getweatherfromall.presentation.fragments.Settings"
-        android:label="fragment_settings"
-        tools:layout="@layout/fragment_settings" />
+        android:id="@+id/settingsFragment"
+        android:name="com.lbweather.getweatherfromall.presentation.fragments.SettingsFragment"
+        android:label="SettingsFragment" >
+        <action
+            android:id="@+id/action_settingsFragment_to_parentDisplayFragment"
+            app:destination="@id/parentDisplayFragment" />
+    </fragment>
 
 
 </navigation>
