@@ -10,7 +10,4 @@ data class LocationUserModel(
     val status: Boolean,
     val country: String,
     val shortLocation: String,
-) {
-    val locationField: String
-        get() = "$shortLocation, ${if (shortLocation in listOfUkraineCity) "Ukraine" else country}"
-}
+)

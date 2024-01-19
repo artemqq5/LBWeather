@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.lbweather.getweatherfromall.R
 import com.lbweather.getweatherfromall.databinding.ItemLocationBinding
 import com.lbweather.getweatherfromall.domain.model.LocationUserModel
+import com.lbweather.getweatherfromall.domain.model.listOfUkraineCity
 import com.lbweather.getweatherfromall.presentation.adapters.LocationAdapter.ViewHolder
 
 class LocationAdapter(
@@ -28,7 +29,13 @@ class LocationAdapter(
             }
 
             // set data to item
-            binding.cityCountryInfo.text = locationItem.shortLocation
+            locationItem.apply {
+                binding.cityCountryInfo.text = itemView.resources.getString(
+                    R.string.location_field_tt,
+                    shortLocation,
+                    if (shortLocation in listOfUkraineCity) itemView.resources.getString(R.string.ukraine_country) else country
+                )
+            }
             binding.statusUse.visibility = if (locationItem.status) View.VISIBLE else View.INVISIBLE
 
             itemView.setOnClickListener {

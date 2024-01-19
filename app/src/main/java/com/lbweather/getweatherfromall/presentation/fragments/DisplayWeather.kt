@@ -24,6 +24,7 @@ import com.lbweather.getweatherfromall.R
 import com.lbweather.getweatherfromall.databinding.FragmentDisplayWeatherBinding
 import com.lbweather.getweatherfromall.domain.model.HourValueModel
 import com.lbweather.getweatherfromall.domain.model.LocationUserModel
+import com.lbweather.getweatherfromall.domain.model.listOfUkraineCity
 import com.lbweather.getweatherfromall.domain.model.weather.HourModel
 import com.lbweather.getweatherfromall.domain.model.weather.WeatherDataModel
 import com.lbweather.getweatherfromall.domain.usecase.ConnectionManagerUseCase
@@ -273,7 +274,26 @@ class DisplayWeather : Fragment(), NavigationCustomAdapter {
                 }
 
                 withContext(Dispatchers.Main + excHandler) {
-                    binding.locationText.text = weatherData.locationDataModel.shortLocation
+                    binding.locationText.text = resources.getString(
+                        R.string.location_field_tt,
+                        weatherData.locationDataModel.shortLocation,
+                        if (weatherData.locationDataModel.shortLocation in listOfUkraineCity) resources.getString(
+                            R.string.ukraine_country
+                        ) else weatherData.locationDataModel.country
+                    )
+
+                    logData(weatherData.locationDataModel.shortLocation)
+                    logData(resources.getString(R.string.location_field_tt, "df", "sdf"))
+                    logData(
+                        resources.getString(
+                            R.string.location_field_tt,
+                            weatherData.locationDataModel.shortLocation,
+                            if (weatherData.locationDataModel.shortLocation in listOfUkraineCity) resources.getString(
+                                R.string.ukraine_country
+                            ) else weatherData.locationDataModel.country
+                        )
+                    )
+
                     binding.conditionText.text = weatherData.currentWeatherModel.conditionModel.text
 
                     // set new data list for hours weather today

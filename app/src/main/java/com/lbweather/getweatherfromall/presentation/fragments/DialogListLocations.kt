@@ -26,6 +26,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.lbweather.getweatherfromall.MyApp.Companion.logData
 import com.lbweather.getweatherfromall.R
 import com.lbweather.getweatherfromall.databinding.DialogLocationsBinding
+import com.lbweather.getweatherfromall.domain.model.listOfUkraineCity
 import com.lbweather.getweatherfromall.domain.model.weather.WeatherDataModel
 import com.lbweather.getweatherfromall.domain.usecase.GoogleAdsUseCase
 import com.lbweather.getweatherfromall.domain.usecase.GoogleAdsUseCase.Companion.ID_LOCATION_SEARCH_BANNER
@@ -139,7 +140,13 @@ class DialogListLocations : DialogFragment(), SetLocationByGPS {
             locationViewModel.searchLocationFlow.collectLatest { locationSearch ->
                 binding.locationLayout.apply {
                     root.visibility = View.VISIBLE
-                    cityCountryInfo.text = locationSearch.shortLocation
+                    locationSearch.apply {
+                        cityCountryInfo.text = resources.getString(
+                            R.string.location_field_tt,
+                            shortLocation,
+                            if (shortLocation in listOfUkraineCity) resources.getString(R.string.ukraine_country) else country
+                        )
+                    }
 
                     val currentActiveLocation = withContext(Dispatchers.IO + excHandler) {
                         locationViewModel.getActiveLocation()
