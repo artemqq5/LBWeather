@@ -25,7 +25,8 @@ Main Technologies used in the project:
 Clean Architecture
 Single Activity Principle
 
-<img src="https://github.com/artemqq5/LBWeather/assets/52855607/d7d6ef9b-976c-411e-a769-b6456cfe6bf0" width="250"> <img src="https://github.com/artemqq5/LBWeather/assets/52855607/feaf72e2-ea6b-40de-bf20-a234cc141991" width="250"> <img src="https://github.com/artemqq5/LBWeather/assets/52855607/388d0f56-5bf2-4066-add6-596d2e091792" width="250"> 
+
+<img src="https://github.com/artemqq5/LBWeather/assets/52855607/f41c6737-a828-4048-af70-f1edff8df8e8" width="250"> <img src="https://github.com/artemqq5/LBWeather/assets/52855607/60f1f7cb-088f-42ed-bdc9-04d9003ace1f" width="250"> <img src="https://github.com/artemqq5/LBWeather/assets/52855607/e2074420-2cce-4e51-813d-58881b5e396a" width="250"> <img src="https://github.com/artemqq5/LBWeather/assets/52855607/ccce8560-9929-4d12-8fde-2b28439611be" width="250">
 
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------
