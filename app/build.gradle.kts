@@ -18,7 +18,7 @@ android {
         applicationId = "com.lbweather.getweatherfromall"
         minSdk = 24
         targetSdk = 34
-        versionCode = 5
+        versionCode = 6
         versionName = "2.1"
         viewBinding.enable = true
 
@@ -88,7 +88,7 @@ android {
 }
 
 dependencies {
-    implementation(platform("com.google.firebase:firebase-bom:32.7.0"))
+    implementation(platform("com.google.firebase:firebase-bom:32.7.1"))
     implementation("com.google.firebase:firebase-crashlytics")
     implementation("com.google.firebase:firebase-analytics")
     implementation("com.google.firebase:firebase-perf")
@@ -118,7 +118,7 @@ dependencies {
     ksp("com.squareup.moshi:moshi-kotlin-codegen:1.15.0")
 
     implementation("com.google.android.gms:play-services-ads:22.6.0")
-    implementation("com.facebook.android:facebook-android-sdk:16.1.2")
+    implementation("com.facebook.android:facebook-android-sdk:16.3.0")
 
     implementation("androidx.drawerlayout:drawerlayout:1.2.0")
     implementation("com.github.bumptech.glide:glide:4.16.0")
