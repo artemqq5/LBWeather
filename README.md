@@ -58,6 +58,7 @@ Google Play Services
 AdMob
 Google Analytics for Firebase
 Firebase Crashlytics
+Facebook
 Log Data
 
 I want to inform you that whenever you use my Service, in a case of an error in the app I collect data and information (through third-party products) on your phone called Log Data. This Log Data may include information such as your device Internet Protocol (“IP”) address, device name, operating system version, the configuration of the app when utilizing my Service, the time and date of your use of the Service, and other statistics.
@@ -94,7 +95,7 @@ Changes to This Privacy Policy
 
 I may update our Privacy Policy from time to time. Thus, you are advised to review this page periodically for any changes. I will notify you of any changes by posting the new Privacy Policy on this page.
 
-This policy is effective as of 2024-01-20
+This policy is effective as of 2024-01-31
 
 Contact Us
 
@@ -115,6 +116,7 @@ Google Play Services
 AdMob
 Google Analytics for Firebase
 Firebase Crashlytics
+Facebook
 You should be aware that there are certain things that artemqq5 will not take responsibility for. Certain functions of the app will require the app to have an active internet connection. The connection can be Wi-Fi or provided by your mobile network provider, but artemqq5 cannot take responsibility for the app not working at full functionality if you don’t have access to Wi-Fi, and you don’t have any of your data allowance left.
 
 If you’re using the app outside of an area with Wi-Fi, you should remember that the terms of the agreement with your mobile network provider will still apply. As a result, you may be charged by your mobile provider for the cost of data for the duration of the connection while accessing the app, or other third-party charges. In using the app, you’re accepting responsibility for any such charges, including roaming data charges if you use the app outside of your home territory (i.e. region or country) without turning off data roaming. If you are not the bill payer for the device on which you’re using the app, please be aware that we assume that you have received permission from the bill payer for using the app.
@@ -129,7 +131,7 @@ Changes to This Terms and Conditions
 
 I may update our Terms and Conditions from time to time. Thus, you are advised to review this page periodically for any changes. I will notify you of any changes by posting the new Terms and Conditions on this page.
 
-These terms and conditions are effective as of 2024-01-20
+These terms and conditions are effective as of 2024-01-31
 
 Contact Us
 
