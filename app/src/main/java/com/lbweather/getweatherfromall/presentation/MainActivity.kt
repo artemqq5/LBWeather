@@ -1,5 +1,6 @@
 package com.lbweather.getweatherfromall.presentation
 
+import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.ads.AdError
 import com.google.android.gms.ads.AdRequest
@@ -15,8 +16,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     private var mInterstitialAd: InterstitialAd? = null
 
-    override fun onStart() {
-        super.onStart()
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         showAds()
     }
 

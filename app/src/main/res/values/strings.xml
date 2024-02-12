@@ -1,10 +1,9 @@
 <resources>
     <string name="app_name" translatable="false">LBWeather</string>
-    <string name="ads_client_app" translatable="false">----</string> <!-- todo exchange -->
+    <string name="ads_client_app" translatable="false">-</string> <!-- todo exchange -->
 
-
-    <string name="facebook_app_id" translatable="false">----</string>
-    <string name="facebook_client_token" translatable="false">----</string>
+    <string name="facebook_app_id" translatable="false">-</string> <!-- todo exchange -->
+    <string name="facebook_client_token" translatable="false">-</string> <!-- todo exchange -->
 
 
     <string name="ukraine_country">Ukraine</string>
