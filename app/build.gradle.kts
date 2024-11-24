@@ -18,8 +18,8 @@ android {
         applicationId = "com.lbweather.getweatherfromall"
         minSdk = 24
         targetSdk = 34
-        versionCode = 7
-        versionName = "2.2"
+        versionCode = 8
+        versionName = "3.0"
         viewBinding.enable = true
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -37,21 +37,6 @@ android {
             "String",
             "ID_ON_START_ACTIVITY_INTERSTITIAL",
             "\"${properties.getProperty("ID_ON_START_ACTIVITY_INTERSTITIAL")}\""
-        )
-        buildConfigField(
-            "String",
-            "ID_BOTTOM_SHEET_BANNER",
-            "\"${properties.getProperty("ID_BOTTOM_SHEET_BANNER")}\""
-        )
-        buildConfigField(
-            "String",
-            "ID_FUTURE_WEATHER_BANNER",
-            "\"${properties.getProperty("ID_FUTURE_WEATHER_BANNER")}\""
-        )
-        buildConfigField(
-            "String",
-            "ID_LOCATION_SEARCH_BANNER",
-            "\"${properties.getProperty("ID_LOCATION_SEARCH_BANNER")}\""
         )
     }
 

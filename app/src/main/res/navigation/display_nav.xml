@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_display"
-    app:startDestination="@id/loadingFragment">
+    app:startDestination="@id/parentDisplayFragment">
 
     <fragment
         android:id="@+id/parentDisplayFragment"
@@ -26,17 +26,6 @@
             android:id="@+id/action_dialogListLocations_to_parentDisplayFragment"
             app:destination="@id/parentDisplayFragment" />
     </dialog>
-    <fragment
-        android:id="@+id/loadingFragment"
-        android:name="com.lbweather.getweatherfromall.presentation.fragments.LoadingFragment"
-        android:label="fragment_loading"
-        tools:layout="@layout/fragment_loading">
-        <action
-            android:id="@+id/action_loadingFragment_to_parentDisplayFragment"
-            app:destination="@id/parentDisplayFragment"
-            app:popUpTo="@id/nav_display"
-            app:popUpToInclusive="true" />
-    </fragment>
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.lbweather.getweatherfromall.presentation.fragments.SettingsFragment"

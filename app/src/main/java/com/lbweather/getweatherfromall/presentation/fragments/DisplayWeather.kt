@@ -29,7 +29,6 @@ import com.lbweather.getweatherfromall.domain.model.weather.HourModel
 import com.lbweather.getweatherfromall.domain.model.weather.WeatherDataModel
 import com.lbweather.getweatherfromall.domain.usecase.ConnectionManagerUseCase
 import com.lbweather.getweatherfromall.domain.usecase.DateTimeUseCase
-import com.lbweather.getweatherfromall.domain.usecase.GoogleAdsUseCase.Companion.ID_BOTTOM_SHEET_BANNER
 import com.lbweather.getweatherfromall.presentation.adapters.CustomAdapter
 import com.lbweather.getweatherfromall.presentation.adapters.LocationAdapter
 import com.lbweather.getweatherfromall.presentation.adapters.NavigationCustomAdapter
@@ -77,33 +76,6 @@ class DisplayWeather : Fragment(), NavigationCustomAdapter {
         logData("Coroutine Exception. DisplayWeather ($throwable)")
     }
 
-    private var adView: AdView? = null
-    private val adSize: AdSize
-        get() {
-            val bounds: Rect = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                requireActivity().windowManager.currentWindowMetrics.bounds
-            } else {
-                val displayMetrics = DisplayMetrics()
-                @Suppress("DEPRECATION")
-                requireActivity().windowManager.defaultDisplay.getMetrics(displayMetrics)
-                Rect(0, 0, displayMetrics.widthPixels, displayMetrics.heightPixels)
-            }
-
-            var adWidthPixels = binding.bottomSheet.adsBannerBox.width.toFloat()
-
-            if (adWidthPixels == 0f) {
-                adWidthPixels = bounds.width().toFloat()
-            }
-
-            val density = resources.displayMetrics.density
-            val adWidth = (adWidthPixels / density).toInt()
-
-            return AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(
-                requireContext(),
-                adWidth
-            )
-        }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?,
     ): View {
@@ -114,15 +86,6 @@ class DisplayWeather : Fragment(), NavigationCustomAdapter {
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        adView = AdView(requireContext())
-        binding.bottomSheet.adsBannerBox.addView(adView)
-
-        binding.bottomSheet.adsBannerBox.viewTreeObserver.addOnGlobalLayoutListener {
-            if (adView?.adUnitId == null || adView?.adSize == null) {
-                loadBanner()
-            }
-        }
 
         // bind locations list adapter to recyclerView
         binding.bottomSheet.recyclerLocation.adapter = locationAdapter
@@ -355,15 +318,6 @@ class DisplayWeather : Fragment(), NavigationCustomAdapter {
                 this.tempF
             }
         }
-    }
-
-    private fun loadBanner() {
-        adView?.let { adView ->
-            adView.adUnitId = ID_BOTTOM_SHEET_BANNER
-            adView.setAdSize(adSize)
-            adView.loadAd(AdRequest.Builder().build())
-        }
-
     }
 
 }

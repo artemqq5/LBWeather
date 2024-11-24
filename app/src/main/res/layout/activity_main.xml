@@ -1,16 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.fragment.app.FragmentContainerView xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/nav_fragment_controller"
-    android:name="androidx.navigation.fragment.NavHostFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    android:visibility="visible"
-    app:defaultNavHost="true"
-    app:navGraph="@navigation/display_nav"
-    tools:context=".presentation.MainActivity" />
+    tools:context=".presentation.MainActivity">
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/nav_fragment_controller"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        android:visibility="visible"
+        app:defaultNavHost="true"
+        app:navGraph="@navigation/display_nav"/>
+
+    <FrameLayout
+        android:id="@+id/loadAdsContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#E4E3E3">
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/animation_view"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_gravity="center"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/my_anim" />
+    </FrameLayout>
+
+
+</FrameLayout>
 
 
 

@@ -1,17 +1,11 @@
 package com.lbweather.getweatherfromall.presentation.fragments
 
-import android.graphics.Rect
-import android.os.Build
 import android.os.Bundle
-import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.AdSize
-import com.google.android.gms.ads.AdView
 import com.lbweather.getweatherfromall.MyApp.Companion.logData
 import com.lbweather.getweatherfromall.R
 import com.lbweather.getweatherfromall.databinding.FragmentFutureForecastBinding
@@ -19,8 +13,6 @@ import com.lbweather.getweatherfromall.domain.model.HourValueModel
 import com.lbweather.getweatherfromall.domain.model.weather.HourModel
 import com.lbweather.getweatherfromall.domain.model.weather.WeatherDataModel
 import com.lbweather.getweatherfromall.domain.usecase.DateTimeUseCase
-import com.lbweather.getweatherfromall.domain.usecase.GoogleAdsUseCase
-import com.lbweather.getweatherfromall.domain.usecase.GoogleAdsUseCase.Companion.ID_FUTURE_WEATHER_BANNER
 import com.lbweather.getweatherfromall.presentation.adapters.CustomAdapter
 import com.lbweather.getweatherfromall.presentation.viewmodel.LocationViewModel
 import com.lbweather.getweatherfromall.presentation.viewmodel.PreferenceViewModel
@@ -60,33 +52,6 @@ class FutureForecastFragment : Fragment() {
         logData("Coroutine Exception. FutureForecastFragment ($throwable)")
     }
 
-    private var adView: AdView? = null
-    private val adSize: AdSize
-        get() {
-            val bounds: Rect = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                requireActivity().windowManager.currentWindowMetrics.bounds
-            } else {
-                val displayMetrics = DisplayMetrics()
-                @Suppress("DEPRECATION")
-                requireActivity().windowManager.defaultDisplay.getMetrics(displayMetrics)
-                Rect(0, 0, displayMetrics.widthPixels, displayMetrics.heightPixels)
-            }
-
-            var adWidthPixels = binding.adsBannerBox.width.toFloat()
-
-            if (adWidthPixels == 0f) {
-                adWidthPixels = bounds.width().toFloat()
-            }
-
-            val density = resources.displayMetrics.density
-            val adWidth = (adWidthPixels / density).toInt()
-
-            return AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(
-                requireContext(),
-                adWidth
-            )
-        }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -98,15 +63,6 @@ class FutureForecastFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        adView = AdView(requireContext())
-        binding.adsBannerBox.addView(adView)
-
-        binding.adsBannerBox.viewTreeObserver.addOnGlobalLayoutListener {
-            if (adView?.adUnitId == null || adView?.adSize == null) {
-                loadBanner()
-            }
-        }
 
         binding.todayList.adapter = adapterWeatherToday
         binding.tomorrowList.adapter = adapterWeatherTomorrow
@@ -203,12 +159,4 @@ class FutureForecastFragment : Fragment() {
         }
     }
 
-    private fun loadBanner() {
-        adView?.let { adView ->
-            adView.adUnitId = ID_FUTURE_WEATHER_BANNER
-            adView.setAdSize(adSize)
-            adView.loadAd(AdRequest.Builder().build())
-        }
-
-    }
 }
